@@ -11,6 +11,8 @@ $(() => {
 
   // grid creation
 
+  const occupado = 'occupado'
+
   const grid = []
   grid.length = 100
 
@@ -123,11 +125,21 @@ $(() => {
           return shipPlacementVertical(shipLength, shipType)
         }
       }
-      grid[shipAnchorIndexVertical] = shipType
-      grid[shipAnchorIndexVertical + 10] = shipType
-      grid[shipAnchorIndexVertical + 20] = shipType
-      grid[shipAnchorIndexVertical + 30] = shipType
+      for (let i = 0; i < shipLength; i++) {
+        grid[shipAnchorIndexVertical + (10 * i)] = shipType
+      }
+      if (shipAnchorIndexVertical < (100 - (shipLength * 10) - 1) && (shipAnchorIndexVertical % 10 !== 0) && (shipAnchorIndexVertical > 9) && (shipAnchorIndexVertical % 10 !== 9)) {
+        for (let i = 0; i < shipLength; i++) {
+          grid[shipAnchorIndexVertical - 10] = occupado
+          grid[shipAnchorIndexVertical + (shipLength * 10)] = occupado
+          grid[shipAnchorIndexVertical - 1 + (i * 10)] = occupado
+          grid[shipAnchorIndexVertical + 1 + (i * 10)] = occupado
+        }
+      } 
       for (let i = 0; i < grid.length; i++) {
+        if (grid[i] === occupado) {
+          occupied.push(i)
+        }
         if (grid[i] === shipType) {
           occupied.push(i)
         }
@@ -138,9 +150,9 @@ $(() => {
           return shipPlacementVertical(shipLength, shipType)
         }
       }
-      grid[shipAnchorIndexVertical] = shipType
-      grid[shipAnchorIndexVertical + 10] = shipType
-      grid[shipAnchorIndexVertical + 20] = shipType
+      for (let i = 0; i < shipLength; i++) {
+        grid[shipAnchorIndexVertical + (10 * i)] = shipType
+      }
       for (let i = 0; i < grid.length; i++) {
         if (grid[i] === shipType) {
           occupied.push(i)
@@ -152,8 +164,9 @@ $(() => {
           return shipPlacementVertical(shipLength, shipType)
         }
       }
-      grid[shipAnchorIndexVertical] = shipType
-      grid[shipAnchorIndexVertical + 10] = shipType
+      for (let i = 0; i < shipLength; i++) {
+        grid[shipAnchorIndexVertical + (10 * i)] = shipType
+      }
       for (let i = 0; i < grid.length; i++) {
         if (grid[i] === shipType) {
           occupied.push(i)
@@ -203,10 +216,9 @@ $(() => {
           return shipPlacementHorizontal(shipLength, shipType)
         }
       }
-      grid[shipAnchorIndexHorizontal] = shipType
-      grid[shipAnchorIndexHorizontal + 1] = shipType
-      grid[shipAnchorIndexHorizontal + 2] = shipType
-      grid[shipAnchorIndexHorizontal + 3] = shipType
+      for (let i = 0; i < shipLength; i++) {
+        grid[shipAnchorIndexHorizontal + i] = shipType
+      }
       for (let i = 0; i < grid.length; i++) {
         if (grid[i] === shipType) {
           occupied.push(i)
@@ -218,9 +230,9 @@ $(() => {
           return shipPlacementHorizontal(shipLength, shipType)
         }
       }
-      grid[shipAnchorIndexHorizontal] = shipType
-      grid[shipAnchorIndexHorizontal + 1] = shipType
-      grid[shipAnchorIndexHorizontal + 2] = shipType
+      for (let i = 0; i < shipLength; i++) {
+        grid[shipAnchorIndexHorizontal + i] = shipType
+      }
       for (let i = 0; i < grid.length; i++) {
         if (grid[i] === shipType) {
           occupied.push(i)
@@ -232,8 +244,9 @@ $(() => {
           return shipPlacementHorizontal(shipLength, shipType)
         }
       }
-      grid[shipAnchorIndexHorizontal] = shipType
-      grid[shipAnchorIndexHorizontal + 1] = shipType
+      for (let i = 0; i < shipLength; i++) {
+        grid[shipAnchorIndexHorizontal + i] = shipType
+      }
       for (let i = 0; i < grid.length; i++) {
         if (grid[i] === shipType) {
           occupied.push(i)
@@ -281,6 +294,13 @@ $(() => {
     }
     if (grid[i] === destroyer) {
       $gridItems.eq(i).addClass('destroyer')
+    }
+  }
+
+  for (let i = 0; i < grid.length; i++) {
+    if (grid[i] === occupado) {
+      console.log(grid[i])
+      $gridItems.eq(i).addClass('occupied')
     }
   }
 
