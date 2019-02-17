@@ -6,7 +6,7 @@ $(() => {
   const mainGrid = document.querySelector('.grid')
 
   $body.css({
-    background: 'red'
+    background: 'pink'
   })
 
   // grid creation
@@ -705,6 +705,10 @@ $(() => {
       $gridItems.eq(i).addClass('occupied')
     }
   }
+
+  const noDuplicatesOccupiedList = [...new Set(occupied)]
+
+  console.log(noDuplicatesOccupiedList)
 
 
 })
