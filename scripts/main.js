@@ -52,8 +52,9 @@ $(() => {
   }
 
   let carrierAnchorIndex
-  let battleShipAnchorIndexHorizontal
   const occupied = []
+
+  // carrier placement
 
   function carrierPlacement() {
     const verticalOrHorizontalCarrier = verticalOrHorizontal()
@@ -111,94 +112,177 @@ $(() => {
     }
   }
 
-  function battleShipPlacementVertical() {
-    let battleShipAnchorIndexVertical = null
-    battleShipAnchorIndexVertical = Math.floor(Math.random() * 70)
-    for (let i = 0; i < occupied.length; i++) {
-      if (battleShipAnchorIndexVertical === occupied[i] || battleShipAnchorIndexVertical + 10 === occupied[i] || battleShipAnchorIndexVertical + 20 === occupied[i] || battleShipAnchorIndexVertical + 30 === occupied[i]) {
-        return battleShipPlacementVertical()
+  //ship placement function
+
+  function shipPlacementVertical(shipLength, shipType) {
+    let shipAnchorIndexVertical = null
+    shipAnchorIndexVertical = Math.floor(Math.random() * ((100 - (shipLength * 10)) + 10))
+    if (shipLength === 4) {
+      for (let i = 0; i < occupied.length; i++) {
+        if (shipAnchorIndexVertical === occupied[i] || shipAnchorIndexVertical + 10 === occupied[i] || shipAnchorIndexVertical + 20 === occupied[i] || shipAnchorIndexVertical + 30 === occupied[i]) {
+          return shipPlacementVertical(shipLength, shipType)
+        }
       }
-    }
-    grid[battleShipAnchorIndexVertical] = battleShip
-    grid[battleShipAnchorIndexVertical + 10] = battleShip
-    grid[battleShipAnchorIndexVertical + 20] = battleShip
-    grid[battleShipAnchorIndexVertical + 30] = battleShip
-    for (let i = 0; i < grid.length; i++) {
-      if (grid[i] === battleShip) {
-        occupied.push(i)
+      grid[shipAnchorIndexVertical] = shipType
+      grid[shipAnchorIndexVertical + 10] = shipType
+      grid[shipAnchorIndexVertical + 20] = shipType
+      grid[shipAnchorIndexVertical + 30] = shipType
+      for (let i = 0; i < grid.length; i++) {
+        if (grid[i] === shipType) {
+          occupied.push(i)
+        }
+      }
+    } else if (shipLength === 3) {
+      for (let i = 0; i < occupied.length; i++) {
+        if (shipAnchorIndexVertical === occupied[i] || shipAnchorIndexVertical + 10 === occupied[i] || shipAnchorIndexVertical + 20 === occupied[i]) {
+          return shipPlacementVertical(shipLength, shipType)
+        }
+      }
+      grid[shipAnchorIndexVertical] = shipType
+      grid[shipAnchorIndexVertical + 10] = shipType
+      grid[shipAnchorIndexVertical + 20] = shipType
+      for (let i = 0; i < grid.length; i++) {
+        if (grid[i] === shipType) {
+          occupied.push(i)
+        }
+      }
+    } else if (shipLength === 2) {
+      for (let i = 0; i < occupied.length; i++) {
+        if (shipAnchorIndexVertical === occupied[i] || shipAnchorIndexVertical + 10 === occupied[i]) {
+          return shipPlacementVertical(shipLength, shipType)
+        }
+      }
+      grid[shipAnchorIndexVertical] = shipType
+      grid[shipAnchorIndexVertical + 10] = shipType
+      for (let i = 0; i < grid.length; i++) {
+        if (grid[i] === shipType) {
+          occupied.push(i)
+        }
       }
     }
   }
 
-  function battleShipPlacementHorizontal() {
-    let battleShipAnchorIndexHorizontal = null
+  function shipPlacementHorizontal(shipLength, shipType) {
+    let shipAnchorIndexHorizontal = null
     const row = (Math.floor(Math.random() * 10))
     switch(row) {
       case 0:
-        battleShipAnchorIndexHorizontal = getRandomInt(0,5)
+        shipAnchorIndexHorizontal = getRandomInt(0,10 - shipLength)
         break
       case 1:
-        battleShipAnchorIndexHorizontal = getRandomInt(10,15)
+        shipAnchorIndexHorizontal = getRandomInt(10,20 - shipLength)
         break
       case 2:
-        battleShipAnchorIndexHorizontal = getRandomInt(20,25)
+        shipAnchorIndexHorizontal = getRandomInt(20,30 - shipLength)
         break
       case 3:
-        battleShipAnchorIndexHorizontal = getRandomInt(30,35)
+        shipAnchorIndexHorizontal = getRandomInt(30,40 - shipLength)
         break
       case 4:
-        battleShipAnchorIndexHorizontal = getRandomInt(40,45)
+        shipAnchorIndexHorizontal = getRandomInt(40,50 - shipLength)
         break
       case 5:
-        battleShipAnchorIndexHorizontal = getRandomInt(50,55)
+        shipAnchorIndexHorizontal = getRandomInt(50,60 - shipLength)
         break
       case 6:
-        battleShipAnchorIndexHorizontal = getRandomInt(60,65)
+        shipAnchorIndexHorizontal = getRandomInt(60,70 - shipLength)
         break
       case 7:
-        battleShipAnchorIndexHorizontal = getRandomInt(70,75)
+        shipAnchorIndexHorizontal = getRandomInt(70,80 - shipLength)
         break
       case 8:
-        battleShipAnchorIndexHorizontal = getRandomInt(80,85)
+        shipAnchorIndexHorizontal = getRandomInt(80,90 - shipLength)
         break
       case 9:
-        battleShipAnchorIndexHorizontal = getRandomInt(90,95)
+        shipAnchorIndexHorizontal = getRandomInt(90,100 - shipLength)
         break
     }
-    console.log(occupied)
-    console.log(battleShipAnchorIndexHorizontal)
-    for (let i = 0; i < occupied.length; i++) {
-      if (battleShipAnchorIndexHorizontal === occupied[i] || battleShipAnchorIndexHorizontal + 1 === occupied[i] || battleShipAnchorIndexHorizontal + 2 === occupied[i] || battleShipAnchorIndexHorizontal + 3 === occupied[i] ) {
-        return battleShipPlacementHorizontal()
+    if (shipLength === 4) {
+      for (let i = 0; i < occupied.length; i++) {
+        if (shipAnchorIndexHorizontal === occupied[i] || shipAnchorIndexHorizontal + 1 === occupied[i] || shipAnchorIndexHorizontal + 2 === occupied[i] || shipAnchorIndexHorizontal + 3 === occupied[i] ) {
+          return shipPlacementHorizontal(shipLength, shipType)
+        }
+      }
+      grid[shipAnchorIndexHorizontal] = shipType
+      grid[shipAnchorIndexHorizontal + 1] = shipType
+      grid[shipAnchorIndexHorizontal + 2] = shipType
+      grid[shipAnchorIndexHorizontal + 3] = shipType
+      for (let i = 0; i < grid.length; i++) {
+        if (grid[i] === shipType) {
+          occupied.push(i)
+        }
+      }
+    } else if (shipLength === 3) {
+      for (let i = 0; i < occupied.length; i++) {
+        if (shipAnchorIndexHorizontal === occupied[i] || shipAnchorIndexHorizontal + 1 === occupied[i] || shipAnchorIndexHorizontal + 2 === occupied[i]) {
+          return shipPlacementHorizontal(shipLength, shipType)
+        }
+      }
+      grid[shipAnchorIndexHorizontal] = shipType
+      grid[shipAnchorIndexHorizontal + 1] = shipType
+      grid[shipAnchorIndexHorizontal + 2] = shipType
+      for (let i = 0; i < grid.length; i++) {
+        if (grid[i] === shipType) {
+          occupied.push(i)
+        }
+      }
+    } else if (shipLength === 2) {
+      for (let i = 0; i < occupied.length; i++) {
+        if (shipAnchorIndexHorizontal === occupied[i] || shipAnchorIndexHorizontal + 1 === occupied[i]) {
+          return shipPlacementHorizontal(shipLength, shipType)
+        }
+      }
+      grid[shipAnchorIndexHorizontal] = shipType
+      grid[shipAnchorIndexHorizontal + 1] = shipType
+      for (let i = 0; i < grid.length; i++) {
+        if (grid[i] === shipType) {
+          occupied.push(i)
+        }
       }
     }
-    grid[battleShipAnchorIndexHorizontal] = battleShip
-    grid[battleShipAnchorIndexHorizontal + 1] = battleShip
-    grid[battleShipAnchorIndexHorizontal + 2] = battleShip
-    grid[battleShipAnchorIndexHorizontal + 3] = battleShip
-    for (let i = 0; i < grid.length; i++) {
-      if (grid[i] === battleShip) {
-        occupied.push(i)
-      }
-    }
+
   }
 
-  function battleShipPlacement () {
-    const verticalOrHorizontalbattleShip = verticalOrHorizontal()
-    if (verticalOrHorizontalbattleShip === 0) {
-      battleShipPlacementVertical()
-    } else if (verticalOrHorizontalbattleShip === 1) {
-      battleShipPlacementHorizontal()
+  function shipPlacement(shipLength, shipType) {
+    const verticalOrHorizontalShip = verticalOrHorizontal()
+    if (verticalOrHorizontalShip === 0) {
+      shipPlacementVertical(shipLength, shipType)
+    } else if (verticalOrHorizontalShip === 1) {
+      shipPlacementHorizontal(shipLength, shipType)
     }
   }
 
   function computerPlacement() {
     carrierPlacement()
-    battleShipPlacement()
+    shipPlacement(4, battleShip)
+    shipPlacement(3, cruiser)
+    shipPlacement(3, submarine)
+    shipPlacement(2, destroyer)
     console.log(grid)
     console.log(occupied)
   }
 
   computerPlacement()
+
+
+  for (let i = 0; i < grid.length; i++) {
+    if (grid[i] === carrier) {
+      console.log(grid[i])
+      $gridItems.eq(i).addClass('carrier')
+    }
+    if (grid[i] === battleShip) {
+      $gridItems.eq(i).addClass('battleShip')
+    }
+    if (grid[i] === cruiser) {
+      $gridItems.eq(i).addClass('cruiser')
+    }
+    if (grid[i] === submarine) {
+      $gridItems.eq(i).addClass('submarine')
+    }
+    if (grid[i] === destroyer) {
+      $gridItems.eq(i).addClass('destroyer')
+    }
+  }
+
 
 })

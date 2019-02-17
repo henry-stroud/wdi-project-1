@@ -24,6 +24,18 @@ body {
   border: 1px solid black;
 }
 
-.blue {
+.carrier {
   background: blue;
+}
+.battleShip {
+  background: orange;
+}
+.cruiser {
+  background: green;
+}
+.submarine {
+  background: yellow;
+}
+.destroyer {
+  background: purple;
 }
