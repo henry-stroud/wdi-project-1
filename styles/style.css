@@ -7,9 +7,147 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-family: 'Kanit', sans-serif;
 }
 
+.bothGrids {
+  width: 900px;
+  height: 400px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.selectors {
+  width: 900px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.shipz {
+  padding-top: 10px;
+  width: 400px;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.shipCarrier {
+  width: 100px;
+  height: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  cursor: pointer;
+}
+
+.boxCarrier {
+  width: 20%;
+  height: 100%;
+  border: 1px solid black;
+  background: blue;
+}
+.shipBattleShip {
+  width: 80px;
+  height: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  cursor: pointer;
+}
+
+.boxBattleShip {
+  width: 25%;
+  height: 100%;
+  border: 1px solid black;
+  background: orange;
+}
+
+.shipSub {
+  width: 60px;
+  height: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  cursor: pointer;
+}
+
+.boxSub {
+  width: 33%;
+  height: 100%;
+  border: 1px solid black;
+  background: yellow;
+}
+.shipCruiser {
+  width: 60px;
+  height: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  cursor: pointer;
+}
+
+.boxCruiser {
+  width: 33%;
+  height: 100%;
+  border: 1px solid black;
+  background: green;
+}
+.shipDestroyer {
+  width: 40px;
+  height: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  cursor: pointer;
+}
+
+.boxDestroyer {
+  width: 50%;
+  height: 100%;
+  border: 1px solid black;
+  background: purple;
+}
+
+.horizontal {
+  width: 100px;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+}
+.vertical {
+  width: 80px;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+
 .grid {
+  width: 400px;
+  height: 400px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.humanGrid {
   width: 400px;
   height: 400px;
   display: flex;
@@ -22,6 +160,13 @@ body {
   width: 10%;
   height: 10%;
   border: 1px solid black;
+}
+
+.grid-item-human {
+  width: 10%;
+  height: 10%;
+  border: 1px solid black;
+  cursor: pointer;
 }
 
 .carrier {
@@ -40,4 +185,5 @@ body {
   background: purple;
 }
 .occupied {
+  background: white;
 }
