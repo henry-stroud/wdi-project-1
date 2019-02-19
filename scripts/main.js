@@ -57,7 +57,7 @@ $(() => {
   // ship creation
 
   class Ship {
-    constructor(shipType,lengthOfShip,hitPoints,placed,sunk,position,name) {
+    constructor(shipType,lengthOfShip,hitPoints,placed,sunk,position,name,occupied) {
       this.shipType = shipType
       this.lengthOfShip = lengthOfShip
       this.hitPoints = hitPoints
@@ -65,20 +65,21 @@ $(() => {
       this.sunk = sunk
       this.position = position
       this.name = name
+      this.occupied = occupied
     }
   }
 
-  const carrier = new Ship('carrier','5','5',false,false,[],'Carrier')
-  const battleShip = new Ship('battleShip','4','4',false,false,[],'Battleship')
-  const cruiser = new Ship('cruiser','3','3',false,false,[], 'Cruiser')
-  const submarine = new Ship('submarine','3','3',false,false,[], 'Submarine')
-  const destroyer = new Ship('destroyer','2','2',false,false,[], 'Destroyer')
+  const carrier = new Ship('carrier','5','5',false,false,[],'Carrier',[])
+  const battleShip = new Ship('battleShip','4','4',false,false,[],'Battleship',[])
+  const cruiser = new Ship('cruiser','3','3',false,false,[], 'Cruiser',[])
+  const submarine = new Ship('submarine','3','3',false,false,[], 'Submarine',[])
+  const destroyer = new Ship('destroyer','2','2',false,false,[], 'Destroyer',[])
 
-  const humanCarrier = new Ship('carrier','5','5',false,false, [], 'Carrier')
-  const humanBattleShip = new Ship('battleShip','4','4',false,false,[], 'Battleship')
-  const humanCruiser = new Ship('cruiser','3','3',false,false,[], 'Cruiser')
-  const humanSubmarine = new Ship('submarine','3','3',false,false,[], 'Submarine')
-  const humanDestroyer = new Ship('destroyer','2','2',false,false,[], 'Destroyer')
+  const humanCarrier = new Ship('carrier','5','5',false,false, [], 'Carrier',[])
+  const humanBattleShip = new Ship('battleShip','4','4',false,false,[], 'Battleship',[])
+  const humanCruiser = new Ship('cruiser','3','3',false,false,[], 'Cruiser',[])
+  const humanSubmarine = new Ship('submarine','3','3',false,false,[], 'Submarine',[])
+  const humanDestroyer = new Ship('destroyer','2','2',false,false,[], 'Destroyer',[])
 
 
   function getRandomInt(min, max) {
@@ -113,65 +114,66 @@ $(() => {
     }
     if (shipAnchorIndexVertical < (100 - (shipLength * 10) - 1) && (shipAnchorIndexVertical % 10 !== 0) && (shipAnchorIndexVertical > 9) && (shipAnchorIndexVertical % 10 !== 9)) {
       for (let i = 0; i < shipLength; i++) {
-        grid[shipAnchorIndexVertical - 10] = occupado
-        grid[shipAnchorIndexVertical + (shipLength * 10)] = occupado
-        grid[shipAnchorIndexVertical - 1 + (i * 10)] = occupado
-        grid[shipAnchorIndexVertical + 1 + (i * 10)] = occupado
+        grid[shipAnchorIndexVertical - 10] = occupado + shipType.name
+        grid[shipAnchorIndexVertical + (shipLength * 10)] = occupado + shipType.name
+        grid[shipAnchorIndexVertical - 1 + (i * 10)] = occupado + shipType.name
+        grid[shipAnchorIndexVertical + 1 + (i * 10)] = occupado + shipType.name
       }
     } else if (shipAnchorIndexVertical < (100 - (shipLength * 10) - 1) && (shipAnchorIndexVertical % 10 !== 0) && (shipAnchorIndexVertical > 9) && (shipAnchorIndexVertical % 10 === 9)) {
       for (let i = 0; i < shipLength; i++) {
-        grid[shipAnchorIndexVertical - 10] = occupado
-        grid[shipAnchorIndexVertical + (shipLength * 10)] = occupado
-        grid[shipAnchorIndexVertical - 1 + (i * 10)] = occupado
+        grid[shipAnchorIndexVertical - 10] = occupado + shipType.name
+        grid[shipAnchorIndexVertical + (shipLength * 10)] = occupado + shipType.name
+        grid[shipAnchorIndexVertical - 1 + (i * 10)] = occupado + shipType.name
       }
     } else if (shipAnchorIndexVertical < (100 - (shipLength * 10) - 1) && (shipAnchorIndexVertical % 10 !== 0) && (shipAnchorIndexVertical <= 9) && (shipAnchorIndexVertical % 10 === 9)) {
       for (let i = 0; i < shipLength; i++) {
-        grid[shipAnchorIndexVertical + (shipLength * 10)] = occupado
-        grid[shipAnchorIndexVertical - 1 + (i * 10)] = occupado
+        grid[shipAnchorIndexVertical + (shipLength * 10)] = occupado + shipType.name
+        grid[shipAnchorIndexVertical - 1 + (i * 10)] = occupado + shipType.name
       }
     } else if (shipAnchorIndexVertical < (100 - (shipLength * 10) - 1) && (shipAnchorIndexVertical % 10 !== 0) && (shipAnchorIndexVertical <= 9) && (shipAnchorIndexVertical % 10 !== 9)) {
       for (let i = 0; i < shipLength; i++) {
-        grid[shipAnchorIndexVertical + (shipLength * 10)] = occupado
-        grid[shipAnchorIndexVertical - 1 + (i * 10)] = occupado
-        grid[shipAnchorIndexVertical + 1 + (i * 10)] = occupado
+        grid[shipAnchorIndexVertical + (shipLength * 10)] = occupado + shipType.name
+        grid[shipAnchorIndexVertical - 1 + (i * 10)] = occupado + shipType.name
+        grid[shipAnchorIndexVertical + 1 + (i * 10)] = occupado + shipType.name
       }
     } else if (shipAnchorIndexVertical < (100 - (shipLength * 10) - 1) && (shipAnchorIndexVertical % 10 === 0) && (shipAnchorIndexVertical <= 9) && (shipAnchorIndexVertical % 10 !== 9)) {
       for (let i = 0; i < shipLength; i++) {
-        grid[shipAnchorIndexVertical + (shipLength * 10)] = occupado
-        grid[shipAnchorIndexVertical + 1 + (i * 10)] = occupado
+        grid[shipAnchorIndexVertical + (shipLength * 10)] = occupado + shipType.name
+        grid[shipAnchorIndexVertical + 1 + (i * 10)] = occupado + shipType.name
       }
     } else if (shipAnchorIndexVertical < (100 - (shipLength * 10) - 1) && (shipAnchorIndexVertical % 10 === 0) && (shipAnchorIndexVertical > 9) && (shipAnchorIndexVertical % 10 !== 9)) {
       for (let i = 0; i < shipLength; i++) {
-        grid[shipAnchorIndexVertical - 10] = occupado
-        grid[shipAnchorIndexVertical + (shipLength * 10)] = occupado
-        grid[shipAnchorIndexVertical + 1 + (i * 10)] = occupado
+        grid[shipAnchorIndexVertical - 10] = occupado + shipType.name
+        grid[shipAnchorIndexVertical + (shipLength * 10)] = occupado + shipType.name
+        grid[shipAnchorIndexVertical + 1 + (i * 10)] = occupado + shipType.name
       }
     } else if (shipAnchorIndexVertical > (100 - (shipLength * 10) - 1) && (shipAnchorIndexVertical % 10 !== 0) && (shipAnchorIndexVertical > 9) && (shipAnchorIndexVertical % 10 !== 9)) {
       for (let i = 0; i < shipLength; i++) {
-        grid[shipAnchorIndexVertical - 10] = occupado
-        grid[shipAnchorIndexVertical - 1 + (i * 10)] = occupado
-        grid[shipAnchorIndexVertical + 1 + (i * 10)] = occupado
+        grid[shipAnchorIndexVertical - 10] = occupado + shipType.name
+        grid[shipAnchorIndexVertical - 1 + (i * 10)] = occupado + shipType.name
+        grid[shipAnchorIndexVertical + 1 + (i * 10)] = occupado + shipType.name
       }
     } else if (shipAnchorIndexVertical >= (100 - (shipLength * 10) - 1) && (shipAnchorIndexVertical % 10 === 0) && (shipAnchorIndexVertical > 9)) {
       for (let i = 0; i < shipLength; i++) {
-        grid[shipAnchorIndexVertical - 10] = occupado
-        grid[shipAnchorIndexVertical + 1 + (i * 10)] = occupado
+        grid[shipAnchorIndexVertical - 10] = occupado + shipType.name
+        grid[shipAnchorIndexVertical + 1 + (i * 10)] = occupado + shipType.name
       }
     } else if (shipAnchorIndexVertical === (100 - (shipLength * 10) - 1) && shipAnchorIndexVertical % 10 === 9) {
       for (let i = 0; i < shipLength; i++) {
-        grid[shipAnchorIndexVertical + (shipLength * 10)] = occupado
-        grid[shipAnchorIndexVertical - 10] = occupado
-        grid[shipAnchorIndexVertical - 1 + (i * 10)] = occupado
+        grid[shipAnchorIndexVertical + (shipLength * 10)] = occupado + shipType.name
+        grid[shipAnchorIndexVertical - 10] = occupado + shipType.name
+        grid[shipAnchorIndexVertical - 1 + (i * 10)] = occupado + shipType.name
       }
     } else if (shipAnchorIndexVertical >= (100 - (shipLength * 10) - 1) && shipAnchorIndexVertical % 10 === 9) {
       for (let i = 0; i < shipLength; i++) {
-        grid[shipAnchorIndexVertical - 10] = occupado
-        grid[shipAnchorIndexVertical - 1 + (i * 10)] = occupado
+        grid[shipAnchorIndexVertical - 10] = occupado + shipType.name
+        grid[shipAnchorIndexVertical - 1 + (i * 10)] = occupado + shipType.name
       }
     }
     for (let i = 0; i < grid.length; i++) {
-      if (grid[i] === occupado) {
+      if (grid[i] === occupado + shipType.name) {
         occupied.push(i)
+        shipType.occupied.push(i)
       }
       if (grid[i] === shipType) {
         occupied.push(i)
@@ -228,69 +230,70 @@ $(() => {
     }
     if (shipAnchorIndexHorizontal % 10 === (10 - shipLength) && shipAnchorIndexHorizontal > 8 && shipAnchorIndexHorizontal < 90) {
       for (let i = 0; i < shipLength; i++) {
-        grid[shipAnchorIndexHorizontal - 1] = occupado
-        grid[shipAnchorIndexHorizontal + 10 + i] = occupado
-        grid[shipAnchorIndexHorizontal - 10 + i] = occupado
+        grid[shipAnchorIndexHorizontal - 1] = occupado + shipType.name
+        grid[shipAnchorIndexHorizontal + 10 + i] = occupado + shipType.name
+        grid[shipAnchorIndexHorizontal - 10 + i] = occupado + shipType.name
       }
     } else if (shipAnchorIndexHorizontal % 10 !== (10 - shipLength) && shipAnchorIndexHorizontal > 8 && shipAnchorIndexHorizontal < 90 && shipAnchorIndexHorizontal % 10 !== 0) {
       for (let i = 0; i < shipLength; i++) {
-        grid[shipAnchorIndexHorizontal - 1] = occupado
-        grid[shipAnchorIndexHorizontal + 10 + i] = occupado
-        grid[shipAnchorIndexHorizontal - 10 + i] = occupado
-        grid[shipAnchorIndexHorizontal + shipLength] = occupado
+        grid[shipAnchorIndexHorizontal - 1] = occupado + shipType.name
+        grid[shipAnchorIndexHorizontal + 10 + i] = occupado + shipType.name
+        grid[shipAnchorIndexHorizontal - 10 + i] = occupado + shipType.name
+        grid[shipAnchorIndexHorizontal + shipLength] = occupado + shipType.name
       }
     } else if (shipAnchorIndexHorizontal > 0 && shipAnchorIndexHorizontal < 9 && shipAnchorIndexHorizontal % 10 !== (10 - shipLength)) {
       for (let i = 0; i < shipLength; i++) {
-        grid[shipAnchorIndexHorizontal - 1] = occupado
-        grid[shipAnchorIndexHorizontal + 10 + i] = occupado
-        grid[shipAnchorIndexHorizontal + shipLength] = occupado
+        grid[shipAnchorIndexHorizontal - 1] = occupado + shipType.name
+        grid[shipAnchorIndexHorizontal + 10 + i] = occupado + shipType.name
+        grid[shipAnchorIndexHorizontal + shipLength] = occupado + shipType.name
       }
     } else if (shipAnchorIndexHorizontal % 10 === 0 && shipAnchorIndexHorizontal > 9 && shipAnchorIndexHorizontal < 90) {
       for (let i = 0; i < shipLength; i++) {
-        grid[shipAnchorIndexHorizontal + 10 + i] = occupado
-        grid[shipAnchorIndexHorizontal - 10 + i] = occupado
-        grid[shipAnchorIndexHorizontal + shipLength] = occupado
+        grid[shipAnchorIndexHorizontal + 10 + i] = occupado + shipType.name
+        grid[shipAnchorIndexHorizontal - 10 + i] = occupado + shipType.name
+        grid[shipAnchorIndexHorizontal + shipLength] = occupado + shipType.name
       }
     } else if (shipAnchorIndexHorizontal % 10 === 0 && shipAnchorIndexHorizontal < 9 && shipAnchorIndexHorizontal !== 0) {
       for (let i = 0; i < shipLength; i++) {
-        grid[shipAnchorIndexHorizontal - 1] = occupado
-        grid[shipAnchorIndexHorizontal + 10 + i] = occupado
+        grid[shipAnchorIndexHorizontal - 1] = occupado + shipType.name
+        grid[shipAnchorIndexHorizontal + 10 + i] = occupado + shipType.name
       }
     } else if (shipAnchorIndexHorizontal % 10 === 0 && shipAnchorIndexHorizontal < 9) {
       for (let i = 0; i < shipLength; i++) {
-        grid[shipAnchorIndexHorizontal + 10 + i] = occupado
-        grid[shipAnchorIndexHorizontal + shipLength] = occupado
+        grid[shipAnchorIndexHorizontal + 10 + i] = occupado + shipType.name
+        grid[shipAnchorIndexHorizontal + shipLength] = occupado + shipType.name
       }
     } else if (shipAnchorIndexHorizontal % 10 === (10 - shipLength) && shipAnchorIndexHorizontal < 9) {
       for (let i = 0; i < shipLength; i++) {
-        grid[shipAnchorIndexHorizontal - 1] = occupado
-        grid[shipAnchorIndexHorizontal + 10 + i] = occupado
+        grid[shipAnchorIndexHorizontal - 1] = occupado + shipType.name
+        grid[shipAnchorIndexHorizontal + 10 + i] = occupado + shipType.name
       }
     } else if (shipAnchorIndexHorizontal > 90 && shipAnchorIndexHorizontal % 10 !== (10 - shipLength)) {
       for (let i = 0; i < shipLength; i++) {
-        grid[shipAnchorIndexHorizontal + shipLength] = occupado
-        grid[shipAnchorIndexHorizontal - 10 + i] = occupado
-        grid[shipAnchorIndexHorizontal - 1] = occupado
+        grid[shipAnchorIndexHorizontal + shipLength] = occupado + shipType.name
+        grid[shipAnchorIndexHorizontal - 10 + i] = occupado + shipType.name
+        grid[shipAnchorIndexHorizontal - 1] = occupado + shipType.name
       }
     } else if (shipAnchorIndexHorizontal === 90) {
       for (let i = 0; i < shipLength; i++) {
-        grid[shipAnchorIndexHorizontal + shipLength] = occupado
-        grid[shipAnchorIndexHorizontal - 10 + i] = occupado
+        grid[shipAnchorIndexHorizontal + shipLength] = occupado + shipType.name
+        grid[shipAnchorIndexHorizontal - 10 + i] = occupado + shipType.name
       }
     } else if (shipAnchorIndexHorizontal > 90 && shipAnchorIndexHorizontal % 10 === (10 - shipLength)) {
       for (let i = 0; i < shipLength; i++) {
-        grid[shipAnchorIndexHorizontal - 10 + i] = occupado
-        grid[shipAnchorIndexHorizontal - 1] = occupado
+        grid[shipAnchorIndexHorizontal - 10 + i] = occupado + shipType.name
+        grid[shipAnchorIndexHorizontal - 1] = occupado + shipType.name
       }
     } else if (shipAnchorIndexHorizontal === 0) {
       for (let i = 0; i < shipLength; i++) {
-        grid[shipAnchorIndexHorizontal + 10 + i] = occupado
-        grid[shipAnchorIndexHorizontal + shipLength] = occupado
+        grid[shipAnchorIndexHorizontal + 10 + i] = occupado + shipType.name
+        grid[shipAnchorIndexHorizontal + shipLength] = occupado + shipType.name
       }
     }
     for (let i = 0; i < grid.length; i++) {
-      if (grid[i] === occupado) {
+      if (grid[i] === occupado + shipType.name) {
         occupied.push(i)
+        shipType.occupied.push(i)
       }
       if (grid[i] === shipType) {
         occupied.push(i)
@@ -319,27 +322,32 @@ $(() => {
   computerPlacement()
 
 
-  for (let i = 0; i < grid.length; i++) {
-    if (grid[i] === carrier) {
-      $gridItems.eq(i).addClass('carrier')
-    }
-    if (grid[i] === battleShip) {
-      $gridItems.eq(i).addClass('battleShip')
-    }
-    if (grid[i] === cruiser) {
-      $gridItems.eq(i).addClass('cruiser')
-    }
-    if (grid[i] === submarine) {
-      $gridItems.eq(i).addClass('submarine')
-    }
-    if (grid[i] === destroyer) {
-      $gridItems.eq(i).addClass('destroyer')
-    }
-  }
+  // for (let i = 0; i < grid.length; i++) {
+  //   if (grid[i] === carrier) {
+  //     $gridItems.eq(i).addClass('carrier')
+  //   }
+  //   if (grid[i] === battleShip) {
+  //     $gridItems.eq(i).addClass('battleShip')
+  //   }
+  //   if (grid[i] === cruiser) {
+  //     $gridItems.eq(i).addClass('cruiser')
+  //   }
+  //   if (grid[i] === submarine) {
+  //     $gridItems.eq(i).addClass('submarine')
+  //   }
+  //   if (grid[i] === destroyer) {
+  //     $gridItems.eq(i).addClass('destroyer')
+  //   }
+  // }
+
+  const shipArray = [carrier, battleShip, cruiser, submarine, destroyer]
+  const humanShipArray = [humanCarrier, humanBattleShip, humanCruiser, humanSubmarine, humanDestroyer]
 
   for (let i = 0; i < grid.length; i++) {
-    if (grid[i] === occupado) {
-      $gridItems.eq(i).addClass('occupied')
+    for (let x = 0; x < shipArray.length; x++) {
+      if (grid[i] === occupado + shipArray[x].name) {
+        $gridItems.eq(i).addClass('occupied')
+      }
     }
   }
 
@@ -348,19 +356,17 @@ $(() => {
 
   // human placement
 
-  let humanVerticalOrHorizontal = null
-  let humanShipChoice = null
-  let humanShipType = null
+  let humanVerticalOrHorizontal = 1
+  let humanShipChoice = 5
+  let humanShipType = humanCarrier
   ///////////// vertical or horizontal
 
   $vertical.on('click', () => {
     humanVerticalOrHorizontal = 0
-    console.log(humanVerticalOrHorizontal)
   } )
 
   $horizontal.on('click', () => {
     humanVerticalOrHorizontal = 1
-    console.log(humanVerticalOrHorizontal)
   } )
 
   ////////////////// ship selection
@@ -368,27 +374,22 @@ $(() => {
   $carrierHuman.on('click', () => {
     humanShipChoice = 5
     humanShipType = humanCarrier
-    console.log(humanShipChoice)
   } )
   $battleShipHuman.on('click', () => {
     humanShipChoice = 4
     humanShipType = humanBattleShip
-    console.log(humanShipChoice)
   } )
   $subHuman.on('click', () => {
     humanShipChoice = 3
     humanShipType = humanSubmarine
-    console.log(humanShipChoice)
   } )
   $cruiserHuman.on('click', () => {
     humanShipChoice = 3
     humanShipType = humanCruiser
-    console.log(humanShipChoice)
   } )
   $destroyerHuman.on('click', () => {
     humanShipChoice = 2
     humanShipType = humanDestroyer
-    console.log(humanShipChoice)
   } )
 
   /// number of ships placed
@@ -416,66 +417,67 @@ $(() => {
       }
       if (shipAnchorIndexVertical < (100 - (shipLength * 10) - 1) && (shipAnchorIndexVertical % 10 !== 0) && (shipAnchorIndexVertical > 9) && (shipAnchorIndexVertical % 10 !== 9)) {
         for (let i = 0; i < shipLength; i++) {
-          humanGridArray[shipAnchorIndexVertical - 10] = occupado
-          humanGridArray[shipAnchorIndexVertical + (shipLength * 10)] = occupado
-          humanGridArray[shipAnchorIndexVertical - 1 + (i * 10)] = occupado
-          humanGridArray[shipAnchorIndexVertical + 1 + (i * 10)] = occupado
+          humanGridArray[shipAnchorIndexVertical - 10] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexVertical + (shipLength * 10)] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexVertical - 1 + (i * 10)] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexVertical + 1 + (i * 10)] = occupado + shipType.name
         }
       } else if (shipAnchorIndexVertical < (100 - (shipLength * 10) - 1) && (shipAnchorIndexVertical % 10 !== 0) && (shipAnchorIndexVertical > 9) && (shipAnchorIndexVertical % 10 === 9)) {
         for (let i = 0; i < shipLength; i++) {
-          humanGridArray[shipAnchorIndexVertical - 10] = occupado
-          humanGridArray[shipAnchorIndexVertical + (shipLength * 10)] = occupado
-          humanGridArray[shipAnchorIndexVertical - 1 + (i * 10)] = occupado
+          humanGridArray[shipAnchorIndexVertical - 10] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexVertical + (shipLength * 10)] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexVertical - 1 + (i * 10)] = occupado + shipType.name
         }
       } else if (shipAnchorIndexVertical < (100 - (shipLength * 10) - 1) && (shipAnchorIndexVertical % 10 !== 0) && (shipAnchorIndexVertical <= 9) && (shipAnchorIndexVertical % 10 === 9)) {
         for (let i = 0; i < shipLength; i++) {
-          humanGridArray[shipAnchorIndexVertical + (shipLength * 10)] = occupado
-          humanGridArray[shipAnchorIndexVertical - 1 + (i * 10)] = occupado
+          humanGridArray[shipAnchorIndexVertical + (shipLength * 10)] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexVertical - 1 + (i * 10)] = occupado + shipType.name
         }
       } else if (shipAnchorIndexVertical < (100 - (shipLength * 10) - 1) && (shipAnchorIndexVertical % 10 !== 0) && (shipAnchorIndexVertical <= 9) && (shipAnchorIndexVertical % 10 !== 9)) {
         for (let i = 0; i < shipLength; i++) {
-          humanGridArray[shipAnchorIndexVertical + (shipLength * 10)] = occupado
-          humanGridArray[shipAnchorIndexVertical - 1 + (i * 10)] = occupado
-          humanGridArray[shipAnchorIndexVertical + 1 + (i * 10)] = occupado
+          humanGridArray[shipAnchorIndexVertical + (shipLength * 10)] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexVertical - 1 + (i * 10)] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexVertical + 1 + (i * 10)] = occupado + shipType.name
         }
       } else if (shipAnchorIndexVertical < (100 - (shipLength * 10) - 1) && (shipAnchorIndexVertical % 10 === 0) && (shipAnchorIndexVertical <= 9) && (shipAnchorIndexVertical % 10 !== 9)) {
         for (let i = 0; i < shipLength; i++) {
-          humanGridArray[shipAnchorIndexVertical + (shipLength * 10)] = occupado
-          humanGridArray[shipAnchorIndexVertical + 1 + (i * 10)] = occupado
+          humanGridArray[shipAnchorIndexVertical + (shipLength * 10)] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexVertical + 1 + (i * 10)] = occupado + shipType.name
         }
       } else if (shipAnchorIndexVertical < (100 - (shipLength * 10) - 1) && (shipAnchorIndexVertical % 10 === 0) && (shipAnchorIndexVertical > 9) && (shipAnchorIndexVertical % 10 !== 9)) {
         for (let i = 0; i < shipLength; i++) {
-          humanGridArray[shipAnchorIndexVertical - 10] = occupado
-          humanGridArray[shipAnchorIndexVertical + (shipLength * 10)] = occupado
-          humanGridArray[shipAnchorIndexVertical + 1 + (i * 10)] = occupado
+          humanGridArray[shipAnchorIndexVertical - 10] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexVertical + (shipLength * 10)] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexVertical + 1 + (i * 10)] = occupado + shipType.name
         }
       } else if (shipAnchorIndexVertical > (100 - (shipLength * 10) - 1) && (shipAnchorIndexVertical % 10 !== 0) && (shipAnchorIndexVertical > 9) && (shipAnchorIndexVertical % 10 !== 9)) {
         for (let i = 0; i < shipLength; i++) {
-          humanGridArray[shipAnchorIndexVertical - 10] = occupado
-          humanGridArray[shipAnchorIndexVertical - 1 + (i * 10)] = occupado
-          humanGridArray[shipAnchorIndexVertical + 1 + (i * 10)] = occupado
+          humanGridArray[shipAnchorIndexVertical - 10] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexVertical - 1 + (i * 10)] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexVertical + 1 + (i * 10)] = occupado + shipType.name
         }
       } else if (shipAnchorIndexVertical >= (100 - (shipLength * 10) - 1) && (shipAnchorIndexVertical % 10 === 0) && (shipAnchorIndexVertical > 9)) {
         for (let i = 0; i < shipLength; i++) {
-          humanGridArray[shipAnchorIndexVertical - 10] = occupado
-          humanGridArray[shipAnchorIndexVertical + 1 + (i * 10)] = occupado
+          humanGridArray[shipAnchorIndexVertical - 10] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexVertical + 1 + (i * 10)] = occupado + shipType.name
         }
       } else if (shipAnchorIndexVertical === (100 - (shipLength * 10) - 1) && shipAnchorIndexVertical % 10 === 9) {
         for (let i = 0; i < shipLength; i++) {
-          humanGridArray[shipAnchorIndexVertical + (shipLength * 10)] = occupado
-          humanGridArray[shipAnchorIndexVertical - 10] = occupado
-          humanGridArray[shipAnchorIndexVertical - 1 + (i * 10)] = occupado
+          humanGridArray[shipAnchorIndexVertical + (shipLength * 10)] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexVertical - 10] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexVertical - 1 + (i * 10)] = occupado + shipType.name
         }
       } else if (shipAnchorIndexVertical >= (100 - (shipLength * 10) - 1) && shipAnchorIndexVertical % 10 === 9) {
         for (let i = 0; i < shipLength; i++) {
-          humanGridArray[shipAnchorIndexVertical - 10] = occupado
-          humanGridArray[shipAnchorIndexVertical - 1 + (i * 10)] = occupado
+          humanGridArray[shipAnchorIndexVertical - 10] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexVertical - 1 + (i * 10)] = occupado + shipType.name
         }
       }
 
       for (let i = 0; i < humanGridArray.length; i++) {
-        if (humanGridArray[i] === occupado) {
+        if (humanGridArray[i] === occupado + shipType.name) {
           occupiedHuman.push(i)
+          shipType.occupied.push(i)
         }
         if (humanGridArray[i] === shipType) {
           occupiedHuman.push(i)
@@ -508,71 +510,72 @@ $(() => {
       }
       if (shipAnchorIndexHorizontal % 10 === (10 - shipLength) && shipAnchorIndexHorizontal > 8 && shipAnchorIndexHorizontal < 90) {
         for (let i = 0; i < shipLength; i++) {
-          humanGridArray[shipAnchorIndexHorizontal - 1] = occupado
-          humanGridArray[shipAnchorIndexHorizontal + 10 + i] = occupado
-          humanGridArray[shipAnchorIndexHorizontal - 10 + i] = occupado
+          humanGridArray[shipAnchorIndexHorizontal - 1] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexHorizontal + 10 + i] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexHorizontal - 10 + i] = occupado + shipType.name
         }
       } else if (shipAnchorIndexHorizontal % 10 !== (10 - shipLength) && shipAnchorIndexHorizontal > 8 && shipAnchorIndexHorizontal < 90 && shipAnchorIndexHorizontal % 10 !== 0) {
         for (let i = 0; i < shipLength; i++) {
-          humanGridArray[shipAnchorIndexHorizontal - 1] = occupado
-          humanGridArray[shipAnchorIndexHorizontal + 10 + i] = occupado
-          humanGridArray[shipAnchorIndexHorizontal - 10 + i] = occupado
-          humanGridArray[shipAnchorIndexHorizontal + shipLength] = occupado
+          humanGridArray[shipAnchorIndexHorizontal - 1] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexHorizontal + 10 + i] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexHorizontal - 10 + i] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexHorizontal + shipLength] = occupado + shipType.name
         }
       } else if (shipAnchorIndexHorizontal > 0 && shipAnchorIndexHorizontal < 9 && shipAnchorIndexHorizontal % 10 !== (10 - shipLength)) {
         for (let i = 0; i < shipLength; i++) {
-          humanGridArray[shipAnchorIndexHorizontal - 1] = occupado
-          humanGridArray[shipAnchorIndexHorizontal + 10 + i] = occupado
-          humanGridArray[shipAnchorIndexHorizontal + shipLength] = occupado
+          humanGridArray[shipAnchorIndexHorizontal - 1] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexHorizontal + 10 + i] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexHorizontal + shipLength] = occupado + shipType.name
         }
       } else if (shipAnchorIndexHorizontal % 10 === 0 && shipAnchorIndexHorizontal > 9 && shipAnchorIndexHorizontal < 90) {
         for (let i = 0; i < shipLength; i++) {
-          humanGridArray[shipAnchorIndexHorizontal + 10 + i] = occupado
-          humanGridArray[shipAnchorIndexHorizontal - 10 + i] = occupado
-          humanGridArray[shipAnchorIndexHorizontal + shipLength] = occupado
+          humanGridArray[shipAnchorIndexHorizontal + 10 + i] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexHorizontal - 10 + i] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexHorizontal + shipLength] = occupado + shipType.name
         }
       } else if (shipAnchorIndexHorizontal % 10 === 0 && shipAnchorIndexHorizontal < 9 && shipAnchorIndexHorizontal !== 0) {
         for (let i = 0; i < shipLength; i++) {
-          humanGridArray[shipAnchorIndexHorizontal - 1] = occupado
-          humanGridArray[shipAnchorIndexHorizontal + 10 + i] = occupado
+          humanGridArray[shipAnchorIndexHorizontal - 1] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexHorizontal + 10 + i] = occupado + shipType.name
         }
       } else if (shipAnchorIndexHorizontal % 10 === 0 && shipAnchorIndexHorizontal < 9) {
         for (let i = 0; i < shipLength; i++) {
-          humanGridArray[shipAnchorIndexHorizontal + 10 + i] = occupado
-          humanGridArray[shipAnchorIndexHorizontal + shipLength] = occupado
+          humanGridArray[shipAnchorIndexHorizontal + 10 + i] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexHorizontal + shipLength] = occupado + shipType.name
         }
       } else if (shipAnchorIndexHorizontal % 10 === (10 - shipLength) && shipAnchorIndexHorizontal < 9) {
         for (let i = 0; i < shipLength; i++) {
-          humanGridArray[shipAnchorIndexHorizontal - 1] = occupado
-          humanGridArray[shipAnchorIndexHorizontal + 10 + i] = occupado
+          humanGridArray[shipAnchorIndexHorizontal - 1] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexHorizontal + 10 + i] = occupado + shipType.name
         }
       } else if (shipAnchorIndexHorizontal > 90 && shipAnchorIndexHorizontal % 10 !== (10 - shipLength)) {
         for (let i = 0; i < shipLength; i++) {
-          humanGridArray[shipAnchorIndexHorizontal + shipLength] = occupado
-          humanGridArray[shipAnchorIndexHorizontal - 10 + i] = occupado
-          humanGridArray[shipAnchorIndexHorizontal - 1] = occupado
+          humanGridArray[shipAnchorIndexHorizontal + shipLength] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexHorizontal - 10 + i] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexHorizontal - 1] = occupado + shipType.name
         }
       } else if (shipAnchorIndexHorizontal === 90) {
         for (let i = 0; i < shipLength; i++) {
-          humanGridArray[shipAnchorIndexHorizontal + shipLength] = occupado
-          humanGridArray[shipAnchorIndexHorizontal - 10 + i] = occupado
+          humanGridArray[shipAnchorIndexHorizontal + shipLength] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexHorizontal - 10 + i] = occupado + shipType.name
         }
       } else if (shipAnchorIndexHorizontal > 90 && shipAnchorIndexHorizontal % 10 === (10 - shipLength)) {
         for (let i = 0; i < shipLength; i++) {
-          humanGridArray[shipAnchorIndexHorizontal - 10 + i] = occupado
-          humanGridArray[shipAnchorIndexHorizontal - 1] = occupado
+          humanGridArray[shipAnchorIndexHorizontal - 10 + i] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexHorizontal - 1] = occupado + shipType.name
         }
       } else if (shipAnchorIndexHorizontal === 0) {
         for (let i = 0; i < shipLength; i++) {
-          humanGridArray[shipAnchorIndexHorizontal + 10 + i] = occupado
-          humanGridArray[shipAnchorIndexHorizontal + shipLength] = occupado
+          humanGridArray[shipAnchorIndexHorizontal + 10 + i] = occupado + shipType.name
+          humanGridArray[shipAnchorIndexHorizontal + shipLength] = occupado + shipType.name
         }
       }
       for (let i = 0; i < humanGridArray.length; i++) {
-        if (humanGridArray[i] === occupado) {
+        if (humanGridArray[i] === occupado + shipType.name) {
           occupiedHuman.push(i)
+          shipType.occupied.push(i)
         }
-        if (humanGridArray[i] === shipType) {
+        if (humanGridArray[i] === occupado + shipType.name) {
           occupiedHuman.push(i)
         }
       }
@@ -609,11 +612,12 @@ $(() => {
       }
     }
     for (let i = 0; i < humanGridArray.length; i++) {
-      if (humanGridArray[i] === occupado) {
-        $humanGridItems.eq(i).addClass('occupied')
+      for (let x = 0; x < humanShipArray.length; x++) {
+        if (humanGridArray[i] === occupado + humanShipArray[x].name) {
+          $humanGridItems.eq(i).addClass('occupied')
+        }
       }
     }
-    console.log(humanGridArray)
     if (humanCarrier.placed === true && humanBattleShip.placed === true && humanCruiser.placed === true && humanSubmarine.placed === true && humanDestroyer.placed === true) {
       console.log('all placed')
       playGame()
@@ -622,16 +626,11 @@ $(() => {
 
   // game function
 
-  const shipArray = [carrier, battleShip, cruiser, submarine, destroyer]
-  const humanShipArray = [humanCarrier, humanBattleShip, humanCruiser, humanSubmarine, humanDestroyer]
-
-  const computerTargetNumbers = []
+  let computerTargetNumbers = []
   const humanTargetNumbers = []
 
   function computerShot() {
     const computerHit = Math.floor(Math.random() * 100)
-    console.log(computerHit)
-    console.log(humanGridArray[computerHit])
     for (let i = 0; i < computerTargetNumbers.length; i++) {
       if (computerHit === computerTargetNumbers[i]) {
         console.log('already tried this square')
@@ -648,16 +647,15 @@ $(() => {
           if (humanShipArray[i].hitPoints === 0) {
             $humanGridItems.eq(humanShipArray[i].position[x]).addClass('sunk')
             console.log(`${humanShipArray[i].name} has been sunk!`)
+            computerTargetNumbers = computerTargetNumbers.concat(humanShipArray[i].occupied)
           }
         }
-        console.log(humanGridArray)
         return setTimeout(computerShot, 1000)
       }
     }
     console.log('miss!')
     $humanGridItems.eq(computerHit).addClass('miss')
     computerTargetNumbers.push(computerHit)
-    console.log(humanGridArray)
     return console.log(computerTargetNumbers)
   }
 
@@ -694,13 +692,10 @@ $(() => {
         console.log('miss!')
         $gridItems.eq(index).addClass('miss')
         humanTargetNumbers.push(index)
-        console.log(grid)
         return setTimeout(computerShot, 1000)
       }
     })
   }
-
-  console.log(grid)
 
 
 
