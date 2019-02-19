@@ -322,23 +322,23 @@ $(() => {
   computerPlacement()
 
 
-  // for (let i = 0; i < grid.length; i++) {
-  //   if (grid[i] === carrier) {
-  //     $gridItems.eq(i).addClass('carrier')
-  //   }
-  //   if (grid[i] === battleShip) {
-  //     $gridItems.eq(i).addClass('battleShip')
-  //   }
-  //   if (grid[i] === cruiser) {
-  //     $gridItems.eq(i).addClass('cruiser')
-  //   }
-  //   if (grid[i] === submarine) {
-  //     $gridItems.eq(i).addClass('submarine')
-  //   }
-  //   if (grid[i] === destroyer) {
-  //     $gridItems.eq(i).addClass('destroyer')
-  //   }
-  // }
+  for (let i = 0; i < grid.length; i++) {
+    if (grid[i] === carrier) {
+      $gridItems.eq(i).addClass('carrier')
+    }
+    if (grid[i] === battleShip) {
+      $gridItems.eq(i).addClass('battleShip')
+    }
+    if (grid[i] === cruiser) {
+      $gridItems.eq(i).addClass('cruiser')
+    }
+    if (grid[i] === submarine) {
+      $gridItems.eq(i).addClass('submarine')
+    }
+    if (grid[i] === destroyer) {
+      $gridItems.eq(i).addClass('destroyer')
+    }
+  }
 
   const shipArray = [carrier, battleShip, cruiser, submarine, destroyer]
   const humanShipArray = [humanCarrier, humanBattleShip, humanCruiser, humanSubmarine, humanDestroyer]
@@ -350,9 +350,6 @@ $(() => {
       }
     }
   }
-
-  const noDuplicatesOccupiedList = [...new Set(occupied)]
-
 
   // human placement
 
@@ -639,24 +636,26 @@ $(() => {
     }
     for (let i = 0; i < humanShipArray.length; i++) {
       if (humanGridArray[computerHit] === humanShipArray[i]) {
-        humanShipArray[i].hitPoints = humanShipArray[i].hitPoints - 1
-        console.log('hit!')
+        const targetedShip = humanShipArray[i]
+        targetedShip.hitPoints = targetedShip.hitPoints - 1
+        console.log('computer hit!')
         computerTargetNumbers.push(computerHit)
         $humanGridItems.eq(computerHit).addClass('hit')
-        for (let x = 0; x < humanShipArray[i].position.length; x++) {
-          if (humanShipArray[i].hitPoints === 0) {
-            $humanGridItems.eq(humanShipArray[i].position[x]).addClass('sunk')
-            console.log(`${humanShipArray[i].name} has been sunk!`)
-            computerTargetNumbers = computerTargetNumbers.concat(humanShipArray[i].occupied)
+        if (targetedShip.hitPoints === 0) {
+          for (let x = 0; x < targetedShip.position.length; x++) {
+            $humanGridItems.eq(targetedShip.position[x]).addClass('sunk')
+            console.log(`${targetedShip.name} has been sunk!`)
+            computerTargetNumbers = computerTargetNumbers.concat(targetedShip.occupied)
           }
         }
+
         return setTimeout(computerShot, 1000)
       }
     }
-    console.log('miss!')
+    console.log('computer miss!')
     $humanGridItems.eq(computerHit).addClass('miss')
     computerTargetNumbers.push(computerHit)
-    return console.log(computerTargetNumbers)
+    return
   }
 
 
