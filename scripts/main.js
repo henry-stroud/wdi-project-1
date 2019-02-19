@@ -81,6 +81,10 @@ $(() => {
   const humanSubmarine = new Ship('submarine','3','3',false,false,[], 'Submarine',[])
   const humanDestroyer = new Ship('destroyer','2','2',false,false,[], 'Destroyer',[])
 
+  if (carrier.sunk === true) {
+    carrier.position
+  }
+
 
   function getRandomInt(min, max) {
     min = Math.ceil(min)
@@ -617,6 +621,7 @@ $(() => {
     }
     if (humanCarrier.placed === true && humanBattleShip.placed === true && humanCruiser.placed === true && humanSubmarine.placed === true && humanDestroyer.placed === true) {
       console.log('all placed')
+      $humanGridItems.unbind('click')
       playGame()
     }
   })
@@ -627,35 +632,41 @@ $(() => {
   const humanTargetNumbers = []
 
   function computerShot() {
-    const computerHit = Math.floor(Math.random() * 100)
-    for (let i = 0; i < computerTargetNumbers.length; i++) {
-      if (computerHit === computerTargetNumbers[i]) {
-        console.log('already tried this square')
-        return computerShot()
-      }
-    }
-    for (let i = 0; i < humanShipArray.length; i++) {
-      if (humanGridArray[computerHit] === humanShipArray[i]) {
-        const targetedShip = humanShipArray[i]
-        targetedShip.hitPoints = targetedShip.hitPoints - 1
-        console.log('computer hit!')
-        computerTargetNumbers.push(computerHit)
-        $humanGridItems.eq(computerHit).addClass('hit')
-        if (targetedShip.hitPoints === 0) {
-          for (let x = 0; x < targetedShip.position.length; x++) {
-            $humanGridItems.eq(targetedShip.position[x]).addClass('sunk')
-            console.log(`${targetedShip.name} has been sunk!`)
-            computerTargetNumbers = computerTargetNumbers.concat(targetedShip.occupied)
-          }
+    if (humanCarrier.hitPoints === 0 && humanBattleShip.hitPoints === 0 && humanCruiser.hitPoints === 0 && humanSubmarine.hitPoints === 0 && humanDestroyer.hitPoints === 0) {
+      return console.log('You Lose')
+    } else if (carrier.hitPoints === 0 && battleShip.hitPoints === 0 && cruiser.hitPoints === 0 && submarine.hitPoints === 0 && destroyer.hitPoints === 0) {
+      return console.log('You Win')
+    } else {
+      const computerHit = Math.floor(Math.random() * 100)
+      for (let i = 0; i < computerTargetNumbers.length; i++) {
+        if (computerHit === computerTargetNumbers[i]) {
+          console.log('already tried this square')
+          return computerShot()
         }
-
-        return setTimeout(computerShot, 1000)
       }
+      for (let i = 0; i < humanShipArray.length; i++) {
+        if (humanGridArray[computerHit] === humanShipArray[i]) {
+          const targetedShip = humanShipArray[i]
+          targetedShip.hitPoints = targetedShip.hitPoints - 1
+          console.log('computer hit!')
+          computerTargetNumbers.push(computerHit)
+          $humanGridItems.eq(computerHit).addClass('hit')
+          if (targetedShip.hitPoints === 0) {
+            targetedShip.sunk = true
+            for (let x = 0; x < targetedShip.position.length; x++) {
+              $humanGridItems.eq(targetedShip.position[x]).addClass('sunk')
+            }
+            computerTargetNumbers = computerTargetNumbers.concat(targetedShip.occupied)
+            console.log(`Your ${targetedShip.name} has been sunk!`)
+          }
+          return setTimeout(computerShot, 1000)
+        }
+      }
+      console.log('computer miss!')
+      $humanGridItems.eq(computerHit).addClass('miss')
+      computerTargetNumbers.push(computerHit)
+      return
     }
-    console.log('computer miss!')
-    $humanGridItems.eq(computerHit).addClass('miss')
-    computerTargetNumbers.push(computerHit)
-    return
   }
 
 
@@ -663,8 +674,10 @@ $(() => {
   function playGame() {
     $gridItems.on('click', (e) => {
       if (humanCarrier.hitPoints === 0 && humanBattleShip.hitPoints === 0 && humanCruiser.hitPoints === 0 && humanSubmarine.hitPoints === 0 && humanDestroyer.hitPoints === 0) {
+        $gridItems.unbind('click')
         return console.log('You Lose')
       } else if (carrier.hitPoints === 0 && battleShip.hitPoints === 0 && cruiser.hitPoints === 0 && submarine.hitPoints === 0 && destroyer.hitPoints === 0) {
+        $gridItems.unbind('click')
         return console.log('You Win')
       } else {
         const index = $gridItems.index(e.target)
@@ -679,13 +692,22 @@ $(() => {
             console.log('hit!')
             humanTargetNumbers.push(index)
             $gridItems.eq(index).addClass('hit')
-            for (let x = 0; x < shipArray[i].position.length; x++) {
-              if (shipArray[i].hitPoints === 0) {
+            if (shipArray[i].hitPoints === 0) {
+              for (let x = 0; x < shipArray[i].position.length; x++) {
                 $gridItems.eq(shipArray[i].position[x]).addClass('sunk')
-                console.log(`${shipArray[i].name} has been sunk!`)
+
               }
+              console.log(`Enemy ${shipArray[i].name} has been sunk!`)
             }
-            return console.log(grid)
+            if (humanCarrier.hitPoints === 0 && humanBattleShip.hitPoints === 0 && humanCruiser.hitPoints === 0 && humanSubmarine.hitPoints === 0 && humanDestroyer.hitPoints === 0) {
+              $gridItems.unbind('click')
+              return console.log('You Lose')
+            } else if (carrier.hitPoints === 0 && battleShip.hitPoints === 0 && cruiser.hitPoints === 0 && submarine.hitPoints === 0 && destroyer.hitPoints === 0) {
+              $gridItems.unbind('click')
+              return console.log('You Win')
+            } else {
+              return
+            }
           }
         }
         console.log('miss!')
@@ -695,6 +717,7 @@ $(() => {
       }
     })
   }
+
 
 
 
