@@ -185,5 +185,16 @@ body {
   background: purple;
 }
 .occupied {
+}
+
+.hit {
+  background: red;
+}
+
+.miss {
   background: white;
+}
+
+.sunk {
+  background: black;
 }
