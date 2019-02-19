@@ -12,6 +12,11 @@ $(() => {
   const $subHuman = $('.shipSub')
   const $cruiserHuman = $('.shipCruiser')
   const $destroyerHuman = $('.shipDestroyer')
+  const $boxCarrier = $('.boxCarrier')
+  const $boxBattleShip = $('.boxBattleShip')
+  const $boxSub = $('.boxSub')
+  const $boxCruiser = $('.boxCruiser')
+  const $boxDestroyer = $('.boxDestroyer')
 
   $body.css({
     background: 'pink'
@@ -57,7 +62,7 @@ $(() => {
   // ship creation
 
   class Ship {
-    constructor(shipType,lengthOfShip,hitPoints,placed,sunk,position,name,occupied) {
+    constructor(shipType,lengthOfShip,hitPoints,placed,sunk,position,name,occupied,relatedShip) {
       this.shipType = shipType
       this.lengthOfShip = lengthOfShip
       this.hitPoints = hitPoints
@@ -66,6 +71,7 @@ $(() => {
       this.position = position
       this.name = name
       this.occupied = occupied
+      this.relatedShip = relatedShip
     }
   }
 
@@ -75,11 +81,11 @@ $(() => {
   const submarine = new Ship('submarine','3','3',false,false,[], 'Submarine',[])
   const destroyer = new Ship('destroyer','2','2',false,false,[], 'Destroyer',[])
 
-  const humanCarrier = new Ship('carrier','5','5',false,false, [], 'Carrier',[])
-  const humanBattleShip = new Ship('battleShip','4','4',false,false,[], 'Battleship',[])
-  const humanCruiser = new Ship('cruiser','3','3',false,false,[], 'Cruiser',[])
-  const humanSubmarine = new Ship('submarine','3','3',false,false,[], 'Submarine',[])
-  const humanDestroyer = new Ship('destroyer','2','2',false,false,[], 'Destroyer',[])
+  const humanCarrier = new Ship('carrier','5','5',false,false, [], 'Carrier',[],$boxCarrier)
+  const humanBattleShip = new Ship('battleShip','4','4',false,false,[], 'Battleship',[],$boxBattleShip)
+  const humanCruiser = new Ship('cruiser','3','3',false,false,[], 'Cruiser',[],$boxSub)
+  const humanSubmarine = new Ship('submarine','3','3',false,false,[], 'Submarine',[],$boxCruiser)
+  const humanDestroyer = new Ship('destroyer','2','2',false,false,[], 'Destroyer',[],$boxDestroyer)
 
   if (carrier.sunk === true) {
     carrier.position
@@ -364,10 +370,26 @@ $(() => {
 
   $vertical.on('click', () => {
     humanVerticalOrHorizontal = 0
+    $vertical.css({
+      background: 'rgba(144,238,144 ,0.5)'
+    })
+    $horizontal.css({
+      background: 'none'
+    })
   } )
+
+  $horizontal.css({
+    background: 'rgba(144,238,144 ,0.5)'
+  })
 
   $horizontal.on('click', () => {
     humanVerticalOrHorizontal = 1
+    $horizontal.css({
+      background: 'rgba(144,238,144 ,0.5)'
+    })
+    $vertical.css({
+      background: 'none'
+    })
   } )
 
   ////////////////// ship selection
@@ -621,6 +643,19 @@ $(() => {
     }
     if (humanCarrier.placed === true && humanBattleShip.placed === true && humanCruiser.placed === true && humanSubmarine.placed === true && humanDestroyer.placed === true) {
       console.log('all placed')
+      $horizontal.css({
+        background: 'none',
+        cursor: 'default'
+      })
+      $vertical.css({
+        background: 'none',
+        cursor: 'default'
+      })
+      $humanGridItems.css({
+        cursor: 'default'
+      })
+      $vertical.unbind('click')
+      $horizontal.unbind('click')
       $humanGridItems.unbind('click')
       playGame()
     }
@@ -658,6 +693,9 @@ $(() => {
             }
             computerTargetNumbers = computerTargetNumbers.concat(targetedShip.occupied)
             console.log(`Your ${targetedShip.name} has been sunk!`)
+            targetedShip.relatedShip.css({
+              background: 'black'
+            })
           }
           return setTimeout(computerShot, 1000)
         }
