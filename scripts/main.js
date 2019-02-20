@@ -332,23 +332,23 @@ $(() => {
   computerPlacement()
 
 
-  for (let i = 0; i < grid.length; i++) {
-    if (grid[i] === carrier) {
-      $gridItems.eq(i).addClass('carrier')
-    }
-    if (grid[i] === battleShip) {
-      $gridItems.eq(i).addClass('battleShip')
-    }
-    if (grid[i] === cruiser) {
-      $gridItems.eq(i).addClass('cruiser')
-    }
-    if (grid[i] === submarine) {
-      $gridItems.eq(i).addClass('submarine')
-    }
-    if (grid[i] === destroyer) {
-      $gridItems.eq(i).addClass('destroyer')
-    }
-  }
+  // for (let i = 0; i < grid.length; i++) {
+  //   if (grid[i] === carrier) {
+  //     $gridItems.eq(i).addClass('carrier')
+  //   }
+  //   if (grid[i] === battleShip) {
+  //     $gridItems.eq(i).addClass('battleShip')
+  //   }
+  //   if (grid[i] === cruiser) {
+  //     $gridItems.eq(i).addClass('cruiser')
+  //   }
+  //   if (grid[i] === submarine) {
+  //     $gridItems.eq(i).addClass('submarine')
+  //   }
+  //   if (grid[i] === destroyer) {
+  //     $gridItems.eq(i).addClass('destroyer')
+  //   }
+  // }
 
   const shipArray = [carrier, battleShip, cruiser, submarine, destroyer]
   const humanShipArray = [humanCarrier, humanBattleShip, humanCruiser, humanSubmarine, humanDestroyer]
@@ -662,9 +662,68 @@ $(() => {
   })
 
   // game function
-
+  let randomNumber
+  let lastHit
+  let targetShipLengthy
+  let originalShot
   let computerTargetNumbers = []
   const humanTargetNumbers = []
+  const computerHitNumbers = []
+  const computerMissNumbers = []
+
+  function huntedMode(hitRange) {
+    if (Math.abs(computerHitNumbers[computerHitNumbers.length - 1] - computerHitNumbers[computerHitNumbers.length - 2]) === 10) {
+      randomNumber = Math.floor(Math.random() * 2)
+      if (hitRange.every(elem => computerTargetNumbers.indexOf(elem) >= 0)) {
+        return huntedMode([originalShot + 10, originalShot - 10])
+      }
+    } else if (Math.abs(computerHitNumbers[computerHitNumbers.length - 1] - computerHitNumbers[computerHitNumbers.length - 2]) === 1) {
+      randomNumber = Math.floor(Math.random() * 2)
+      if (hitRange.every(elem => computerTargetNumbers.indexOf(elem) >= 0)) {
+        return huntedMode([originalShot - 1, originalShot + 1])
+      }
+    } else {
+      randomNumber = Math.floor(Math.random() * 4)
+      console.log(hitRange)
+      console.log(computerTargetNumbers)
+    }
+    // hit range needs to be individual to horizontal or vertical when it is parsed so have the random functions in the computer placement function
+    const shotChoice = hitRange[randomNumber]
+    for (let i = 0; i < computerTargetNumbers.length; i++) {
+      if (shotChoice === computerTargetNumbers[i]) {
+        console.log('already tried this square')
+        return huntedMode(hitRange)
+      }
+    }
+    for (let i = 0; i < humanShipArray.length; i++) {
+      if (humanGridArray[shotChoice] === humanShipArray[i]) {
+        const targetedShip = humanShipArray[i]
+        targetedShip.hitPoints = targetedShip.hitPoints - 1
+        console.log('computer hit!')
+        computerHitNumbers.push(shotChoice)
+        console.log(computerHitNumbers)
+        computerTargetNumbers.push(shotChoice)
+        $humanGridItems.eq(shotChoice).addClass('hit')
+        if (targetedShip.hitPoints === 0) {
+          targetedShip.sunk = true
+          for (let x = 0; x < targetedShip.position.length; x++) {
+            $humanGridItems.eq(targetedShip.position[x]).addClass('sunk')
+          }
+          computerTargetNumbers = computerTargetNumbers.concat(targetedShip.occupied)
+          console.log(`Your ${targetedShip.name} has been sunk!`)
+          targetedShip.relatedShip.css({
+            background: 'black'
+          })
+        }
+        return setTimeout(computerShot, 1000)
+      }
+    }
+    console.log('computer miss!')
+    $humanGridItems.eq(shotChoice).addClass('miss')
+    computerTargetNumbers.push(shotChoice)
+    computerMissNumbers.push(shotChoice)
+    return
+  }
 
   function computerShot() {
     if (humanCarrier.hitPoints === 0 && humanBattleShip.hitPoints === 0 && humanCruiser.hitPoints === 0 && humanSubmarine.hitPoints === 0 && humanDestroyer.hitPoints === 0) {
@@ -672,6 +731,21 @@ $(() => {
     } else if (carrier.hitPoints === 0 && battleShip.hitPoints === 0 && cruiser.hitPoints === 0 && submarine.hitPoints === 0 && destroyer.hitPoints === 0) {
       return console.log('You Win')
     } else {
+      lastHit = computerHitNumbers[computerHitNumbers.length - 1]
+      if (lastHit !== undefined) {
+        const shipTargeted = humanGridArray[lastHit]
+        const shipTargetedHitpoints = shipTargeted.hitPoints
+        targetShipLengthy = shipTargeted.lengthOfShip
+        if (shipTargetedHitpoints > 0) {
+          console.log(shipTargetedHitpoints)
+          if (Math.abs(computerHitNumbers[computerHitNumbers.length - 1] - computerHitNumbers[computerHitNumbers.length - 2]) === 10) {
+            return huntedMode([lastHit + 10, lastHit - 10])
+          } else if (Math.abs(computerHitNumbers[computerHitNumbers.length - 1] - computerHitNumbers[computerHitNumbers.length - 2]) === 1) {
+            return huntedMode([lastHit - 1, lastHit + 1])
+          }
+          return huntedMode([lastHit + 10, lastHit - 10, lastHit - 1, lastHit + 1])
+        }
+      }
       const computerHit = Math.floor(Math.random() * 100)
       for (let i = 0; i < computerTargetNumbers.length; i++) {
         if (computerHit === computerTargetNumbers[i]) {
@@ -684,7 +758,10 @@ $(() => {
           const targetedShip = humanShipArray[i]
           targetedShip.hitPoints = targetedShip.hitPoints - 1
           console.log('computer hit!')
+          computerHitNumbers.push(computerHit)
+          console.log(computerHitNumbers)
           computerTargetNumbers.push(computerHit)
+          originalShot = computerHit
           $humanGridItems.eq(computerHit).addClass('hit')
           if (targetedShip.hitPoints === 0) {
             targetedShip.sunk = true
@@ -703,6 +780,8 @@ $(() => {
       console.log('computer miss!')
       $humanGridItems.eq(computerHit).addClass('miss')
       computerTargetNumbers.push(computerHit)
+      computerMissNumbers.push(computerHit)
+      console.log(computerMissNumbers)
       return
     }
   }
@@ -800,6 +879,12 @@ $(() => {
   //     occupiedHuman = [...new Set(occupiedHuman)]
   //     const cat = occupiedHuman.indexOf(i)
   //     occupiedHuman.splice(cat, 1)
+  //   }
+  // }
+
+  // else if (hitRange.every(elem => computerHitNumbers.indexOf(elem) >= 0)) {
+  //   for (let i = 0; i < targetShipLengthy; i++) {
+  //     huntedMode([computerHitNumbers[computerHitNumbers.length - targetShipLengthy] + 10, computerHitNumbers[computerHitNumbers.length - targetShipLengthy] - 10, computerHitNumbers[computerHitNumbers.length - targetShipLengthy] - 1, computerHitNumbers[computerHitNumbers.length - targetShipLengthy] + 1])
   //   }
   // }
 
