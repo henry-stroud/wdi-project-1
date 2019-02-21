@@ -738,8 +738,28 @@ $(() => {
 
   function computerShot() {
     if (humanCarrier.hitPoints === 0 && humanBattleShip.hitPoints === 0 && humanCruiser.hitPoints === 0 && humanSubmarine.hitPoints === 0 && humanDestroyer.hitPoints === 0) {
+      $winOrLose.css({
+        display: 'flex'
+      })
+      $winOrLose.text('You Lose, Play Again?')
+      $main.css({
+        display: 'none'
+      })
+      $winOrLose.on('click', () => {
+        location.reload()
+      })
       return console.log('You Lose')
     } else if (carrier.hitPoints === 0 && battleShip.hitPoints === 0 && cruiser.hitPoints === 0 && submarine.hitPoints === 0 && destroyer.hitPoints === 0) {
+      $winOrLose.css({
+        display: 'flex'
+      })
+      $winOrLose.text('You Won, Play Again?')
+      $main.css({
+        display: 'none'
+      })
+      $winOrLose.on('click', () => {
+        location.reload()
+      })
       return console.log('You Win')
     } else {
       lastHit = computerHitNumbers[computerHitNumbers.length - 1]
@@ -816,33 +836,6 @@ $(() => {
 
   function playGame() {
     $gridItems.on('click', (e) => {
-      if (humanCarrier.hitPoints === 0 && humanBattleShip.hitPoints === 0 && humanCruiser.hitPoints === 0 && humanSubmarine.hitPoints === 0 && humanDestroyer.hitPoints === 0) {
-        $gridItems.unbind('click')
-        $winOrLose.css({
-          display: 'flex'
-        })
-        $winOrLose.text('You Lose, Play Again?')
-        $main.css({
-          display: 'none'
-        })
-        $winOrLose.on('click', () => {
-          location.reload()
-        })
-        return console.log('You Lose')
-      } else if (carrier.hitPoints === 0 && battleShip.hitPoints === 0 && cruiser.hitPoints === 0 && submarine.hitPoints === 0 && destroyer.hitPoints === 0) {
-        $gridItems.unbind('click')
-        $winOrLose.css({
-          display: 'flex'
-        })
-        $winOrLose.text('You Won, Play Again?')
-        $main.css({
-          display: 'none'
-        })
-        $winOrLose.on('click', () => {
-          location.reload()
-        })
-        return console.log('You Win')
-      } else {
         const index = $gridItems.index(e.target)
         for (let i = 0; i < humanTargetNumbers.length; i++) {
           if (index === humanTargetNumbers[i]) {
@@ -897,7 +890,7 @@ $(() => {
         $gridItems.eq(index).addClass('miss')
         humanTargetNumbers.push(index)
         return setTimeout(computerShot, 1000)
-      }
+
     })
   }
 
