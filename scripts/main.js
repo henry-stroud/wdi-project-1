@@ -21,6 +21,7 @@ $(() => {
   const $winOrLose = $('.winOrLose')
 
   $playButton.on('click', () => {
+    $main.fadeIn(1500)
     $main.css({
       display: 'block'
     })
@@ -343,23 +344,23 @@ $(() => {
   computerPlacement()
 
 
-  for (let i = 0; i < grid.length; i++) {
-    if (grid[i] === carrier) {
-      $gridItems.eq(i).addClass('carrier')
-    }
-    if (grid[i] === battleShip) {
-      $gridItems.eq(i).addClass('battleShip')
-    }
-    if (grid[i] === cruiser) {
-      $gridItems.eq(i).addClass('cruiser')
-    }
-    if (grid[i] === submarine) {
-      $gridItems.eq(i).addClass('submarine')
-    }
-    if (grid[i] === destroyer) {
-      $gridItems.eq(i).addClass('destroyer')
-    }
-  }
+  // for (let i = 0; i < grid.length; i++) {
+  //   if (grid[i] === carrier) {
+  //     $gridItems.eq(i).addClass('carrier')
+  //   }
+  //   if (grid[i] === battleShip) {
+  //     $gridItems.eq(i).addClass('battleShip')
+  //   }
+  //   if (grid[i] === cruiser) {
+  //     $gridItems.eq(i).addClass('cruiser')
+  //   }
+  //   if (grid[i] === submarine) {
+  //     $gridItems.eq(i).addClass('submarine')
+  //   }
+  //   if (grid[i] === destroyer) {
+  //     $gridItems.eq(i).addClass('destroyer')
+  //   }
+  // }
 
   const shipArray = [carrier, battleShip, cruiser, submarine, destroyer]
   const humanShipArray = [humanCarrier, humanBattleShip, humanCruiser, humanSubmarine, humanDestroyer]
@@ -408,39 +409,70 @@ $(() => {
   $carrierHuman.on('click', () => {
     humanShipChoice = 5
     humanShipType = humanCarrier
+    $winOrLose.css({
+      display: 'none'
+    })
   } )
   $battleShipHuman.on('click', () => {
     humanShipChoice = 4
     humanShipType = humanBattleShip
+    $winOrLose.css({
+      display: 'none'
+    })
   } )
   $subHuman.on('click', () => {
     humanShipChoice = 3
     humanShipType = humanSubmarine
+    $winOrLose.css({
+      display: 'none'
+    })
   } )
   $cruiserHuman.on('click', () => {
     humanShipChoice = 3
     humanShipType = humanCruiser
+    $winOrLose.css({
+      display: 'none'
+    })
   } )
   $destroyerHuman.on('click', () => {
     humanShipChoice = 2
     humanShipType = humanDestroyer
+    $winOrLose.css({
+      display: 'none'
+    })
   } )
 
   /// number of ships placed
 
 
   function humanShipPlacementVertical(shipLength, shipType, index) {
+    $winOrLose.css({
+      display: 'none'
+    })
     if (shipType.placed === true) {
-      console.log('youve already placed this ship')
+      console.log('You\'ve already placed this ship')
+      $winOrLose.css({
+        display: 'flex'
+      })
+      $winOrLose.text('You\'ve already placed this ship')
     } else {
       let shipAnchorIndexVertical = null
       shipAnchorIndexVertical = index
       if (index > (100 - (shipLength * 10) + 9)) {
+        $winOrLose.css({
+          display: 'flex'
+        })
+        $winOrLose.text('Ship can\'t be placed here')
         return (console.log('you cant place here'))
       }
       for (let i = 0; i < occupiedHuman.length; i++) {
         for (let x = 0; x < shipLength; x++) {
+          console.log(occupiedHuman)
           if (shipAnchorIndexVertical + (10 * x) === occupiedHuman[i]) {
+            $winOrLose.css({
+              display: 'flex'
+            })
+            $winOrLose.text('Ship can\'t be placed here')
             return (console.log('you cant place ship here'))
           }
         }
@@ -522,17 +554,33 @@ $(() => {
   }
 
   function humanShipPlacementHorizontal(shipLength, shipType, index) {
+    $winOrLose.css({
+      display: 'none'
+    })
     if (shipType.placed === true) {
+      $winOrLose.css({
+        display: 'flex'
+      })
+      $winOrLose.text('You\'ve already placed this ship')
       return console.log('youve already placed this ship')
     } else {
       let shipAnchorIndexHorizontal = null
       shipAnchorIndexHorizontal = index
       if (shipAnchorIndexHorizontal % 10 > 10 - shipLength) {
+        $winOrLose.css({
+          display: 'flex'
+        })
+        $winOrLose.text('Ship can\'t be placed here')
         return (console.log('you cant place here'))
       }
       for (let i = 0; i < occupiedHuman.length; i++) {
         for (let x = 0; x < shipLength; x++) {
           if (shipAnchorIndexHorizontal + (1 * x) === occupiedHuman[i]) {
+            console.log(occupiedHuman)
+            $winOrLose.css({
+              display: 'flex'
+            })
+            $winOrLose.text('Ship can\'t be placed here')
             return (console.log('you cant place ship here'))
           }
         }
@@ -609,7 +657,7 @@ $(() => {
           occupiedHuman.push(i)
           shipType.occupied.push(i)
         }
-        if (humanGridArray[i] === occupado + shipType.name) {
+        if (humanGridArray[i] === shipType) {
           occupiedHuman.push(i)
         }
       }
@@ -654,6 +702,18 @@ $(() => {
     }
     if (humanCarrier.placed === true && humanBattleShip.placed === true && humanCruiser.placed === true && humanSubmarine.placed === true && humanDestroyer.placed === true) {
       console.log('all placed')
+      $winOrLose.css({
+        display: 'flex'
+      })
+      $winOrLose.text('Click on enemy grid to fire torpedo')
+      $main.css({
+        display: 'block'
+      })
+      $winOrLose.on('click', () => {
+        $winOrLose.css({
+          display: 'none'
+        })
+      })
       $horizontal.css({
         background: 'none',
         cursor: 'default'
@@ -675,7 +735,6 @@ $(() => {
   // game function
   let randomNumber
   let lastHit
-  let targetShipLengthy
   let originalShot
   let computerTargetNumbers = [-10,-9,-8,-7,-6,-5,-4,-3,-2,-1,100,101,102,103,104,105,106,107,108,109]
   const humanTargetNumbers = []
@@ -766,7 +825,6 @@ $(() => {
       if (lastHit !== undefined) {
         const shipTargeted = humanGridArray[lastHit]
         const shipTargetedHitpoints = shipTargeted.hitPoints
-        targetShipLengthy = shipTargeted.lengthOfShip
         if (shipTargetedHitpoints > 0) {
           console.log(shipTargetedHitpoints)
           if (Math.abs(computerHitNumbers[computerHitNumbers.length - 1] - computerHitNumbers[computerHitNumbers.length - 2]) === 10) {
@@ -836,6 +894,9 @@ $(() => {
 
   function playGame() {
     $gridItems.on('click', (e) => {
+      $winOrLose.css({
+        display: 'none'
+      })
       const index = $gridItems.index(e.target)
       for (let i = 0; i < humanTargetNumbers.length; i++) {
         if (index === humanTargetNumbers[i]) {
@@ -894,57 +955,6 @@ $(() => {
     })
   }
 
-
-
-
   // DO NOT WRITE BELOW THIS LINE
-
-  // function for taking out of array
-
-  // occupiedHuman = [...new Set(occupiedHuman)]
-  // console.log(occupiedHuman)
-  // console.log(occupado + shipLength)
-  // for (let i = 0; i < humanGridArray.length; i++) {
-  //   if (humanGridArray[i] === carrier) {
-  //     $humanGridItems.eq(i).removeClass('carrier')
-  //   }
-  //   if (humanGridArray[i] === battleShip) {
-  //     $humanGridItems.eq(i).removeClass('battleShip')
-  //   }
-  //   if (humanGridArray[i] === cruiser) {
-  //     $humanGridItems.eq(i).removeClass('cruiser')
-  //   }
-  //   if (humanGridArray[i] === submarine) {
-  //     $humanGridItems.eq(i).removeClass('submarine')
-  //   }
-  //   if (humanGridArray[i] === destroyer) {
-  //     $humanGridItems.eq(i).removeClass('destroyer')
-  //   }
-  // }
-  // for (let i = 0; i < humanGridArray.length; i++) {
-  //   if (humanGridArray[i] === occupado + shipLength) {
-  //     $humanGridItems.eq(i).removeClass('occupied')
-  //   }
-  // }
-  // for (let i = 0; i < humanGridArray.length; i++) {
-  //   if (humanGridArray[i] === occupado + shipLength) {
-  //     humanGridArray[i] = 'empty'
-  //     occupiedHuman = [...new Set(occupiedHuman)]
-  //     const cat = occupiedHuman.indexOf(i)
-  //     occupiedHuman.splice(cat, 1)
-  //   }
-  //   if (humanGridArray[i] === shipType) {
-  //     humanGridArray[i] = 'empty'
-  //     occupiedHuman = [...new Set(occupiedHuman)]
-  //     const cat = occupiedHuman.indexOf(i)
-  //     occupiedHuman.splice(cat, 1)
-  //   }
-  // }
-
-  // else if (hitRange.every(elem => computerHitNumbers.indexOf(elem) >= 0)) {
-  //   for (let i = 0; i < targetShipLengthy; i++) {
-  //     huntedMode([computerHitNumbers[computerHitNumbers.length - targetShipLengthy] + 10, computerHitNumbers[computerHitNumbers.length - targetShipLengthy] - 10, computerHitNumbers[computerHitNumbers.length - targetShipLengthy] - 1, computerHitNumbers[computerHitNumbers.length - targetShipLengthy] + 1])
-  //   }
-  // }
 
 })
