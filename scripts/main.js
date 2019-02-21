@@ -743,7 +743,7 @@ $(() => {
       })
       $winOrLose.text('You Lose, Play Again?')
       $main.css({
-        display: 'none'
+        display: 'block'
       })
       $winOrLose.on('click', () => {
         location.reload()
@@ -755,7 +755,7 @@ $(() => {
       })
       $winOrLose.text('You Won, Play Again?')
       $main.css({
-        display: 'none'
+        display: 'block'
       })
       $winOrLose.on('click', () => {
         location.reload()
@@ -836,60 +836,60 @@ $(() => {
 
   function playGame() {
     $gridItems.on('click', (e) => {
-        const index = $gridItems.index(e.target)
-        for (let i = 0; i < humanTargetNumbers.length; i++) {
-          if (index === humanTargetNumbers[i]) {
-            return console.log('youve already tried this square')
-          }
+      const index = $gridItems.index(e.target)
+      for (let i = 0; i < humanTargetNumbers.length; i++) {
+        if (index === humanTargetNumbers[i]) {
+          return console.log('youve already tried this square')
         }
-        for (let i = 0; i < shipArray.length; i++) {
-          if (grid[index] === shipArray[i]) {
-            shipArray[i].hitPoints = shipArray[i].hitPoints - 1
-            console.log('hit!')
-            humanTargetNumbers.push(index)
-            $gridItems.eq(index).addClass('hit')
-            if (shipArray[i].hitPoints === 0) {
-              for (let x = 0; x < shipArray[i].position.length; x++) {
-                $gridItems.eq(shipArray[i].position[x]).addClass('sunk')
+      }
+      for (let i = 0; i < shipArray.length; i++) {
+        if (grid[index] === shipArray[i]) {
+          shipArray[i].hitPoints = shipArray[i].hitPoints - 1
+          console.log('hit!')
+          humanTargetNumbers.push(index)
+          $gridItems.eq(index).addClass('hit')
+          if (shipArray[i].hitPoints === 0) {
+            for (let x = 0; x < shipArray[i].position.length; x++) {
+              $gridItems.eq(shipArray[i].position[x]).addClass('sunk')
 
-              }
-              console.log(`Enemy ${shipArray[i].name} has been sunk!`)
             }
-            if (humanCarrier.hitPoints === 0 && humanBattleShip.hitPoints === 0 && humanCruiser.hitPoints === 0 && humanSubmarine.hitPoints === 0 && humanDestroyer.hitPoints === 0) {
-              $gridItems.unbind('click')
-              $winOrLose.css({
-                display: 'flex'
-              })
-              $winOrLose.text('You Lose, Play Again?')
-              $main.css({
-                display: 'none'
-              })
-              $winOrLose.on('click', () => {
-                location.reload()
-              })
-              return console.log('You Lose')
-            } else if (carrier.hitPoints === 0 && battleShip.hitPoints === 0 && cruiser.hitPoints === 0 && submarine.hitPoints === 0 && destroyer.hitPoints === 0) {
-              $gridItems.unbind('click')
-              $winOrLose.css({
-                display: 'flex'
-              })
-              $winOrLose.text('You Won, Play Again?')
-              $main.css({
-                display: 'none'
-              })
-              $winOrLose.on('click', () => {
-                location.reload()
-              })
-              return console.log('You Win da game')
-            } else {
-              return
-            }
+            console.log(`Enemy ${shipArray[i].name} has been sunk!`)
+          }
+          if (humanCarrier.hitPoints === 0 && humanBattleShip.hitPoints === 0 && humanCruiser.hitPoints === 0 && humanSubmarine.hitPoints === 0 && humanDestroyer.hitPoints === 0) {
+            $gridItems.unbind('click')
+            $winOrLose.css({
+              display: 'flex'
+            })
+            $winOrLose.text('You Lose, Play Again?')
+            $main.css({
+              display: 'block'
+            })
+            $winOrLose.on('click', () => {
+              location.reload()
+            })
+            return console.log('You Lose')
+          } else if (carrier.hitPoints === 0 && battleShip.hitPoints === 0 && cruiser.hitPoints === 0 && submarine.hitPoints === 0 && destroyer.hitPoints === 0) {
+            $gridItems.unbind('click')
+            $winOrLose.css({
+              display: 'flex'
+            })
+            $winOrLose.text('You Won, Play Again?')
+            $main.css({
+              display: 'block'
+            })
+            $winOrLose.on('click', () => {
+              location.reload()
+            })
+            return console.log('You Win da game')
+          } else {
+            return
           }
         }
-        console.log('miss!')
-        $gridItems.eq(index).addClass('miss')
-        humanTargetNumbers.push(index)
-        return setTimeout(computerShot, 1000)
+      }
+      console.log('miss!')
+      $gridItems.eq(index).addClass('miss')
+      humanTargetNumbers.push(index)
+      return setTimeout(computerShot, 1000)
 
     })
   }
