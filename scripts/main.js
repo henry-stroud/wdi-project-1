@@ -332,23 +332,23 @@ $(() => {
   computerPlacement()
 
 
-  // for (let i = 0; i < grid.length; i++) {
-  //   if (grid[i] === carrier) {
-  //     $gridItems.eq(i).addClass('carrier')
-  //   }
-  //   if (grid[i] === battleShip) {
-  //     $gridItems.eq(i).addClass('battleShip')
-  //   }
-  //   if (grid[i] === cruiser) {
-  //     $gridItems.eq(i).addClass('cruiser')
-  //   }
-  //   if (grid[i] === submarine) {
-  //     $gridItems.eq(i).addClass('submarine')
-  //   }
-  //   if (grid[i] === destroyer) {
-  //     $gridItems.eq(i).addClass('destroyer')
-  //   }
-  // }
+  for (let i = 0; i < grid.length; i++) {
+    if (grid[i] === carrier) {
+      $gridItems.eq(i).addClass('carrier')
+    }
+    if (grid[i] === battleShip) {
+      $gridItems.eq(i).addClass('battleShip')
+    }
+    if (grid[i] === cruiser) {
+      $gridItems.eq(i).addClass('cruiser')
+    }
+    if (grid[i] === submarine) {
+      $gridItems.eq(i).addClass('submarine')
+    }
+    if (grid[i] === destroyer) {
+      $gridItems.eq(i).addClass('destroyer')
+    }
+  }
 
   const shipArray = [carrier, battleShip, cruiser, submarine, destroyer]
   const humanShipArray = [humanCarrier, humanBattleShip, humanCruiser, humanSubmarine, humanDestroyer]
@@ -740,8 +740,16 @@ $(() => {
           console.log(shipTargetedHitpoints)
           if (Math.abs(computerHitNumbers[computerHitNumbers.length - 1] - computerHitNumbers[computerHitNumbers.length - 2]) === 10) {
             return huntedMode([lastHit + 10, lastHit - 10])
-          } else if (Math.abs(computerHitNumbers[computerHitNumbers.length - 1] - computerHitNumbers[computerHitNumbers.length - 2]) === 1) {
+          } else if (Math.abs(computerHitNumbers[computerHitNumbers.length - 1] - computerHitNumbers[computerHitNumbers.length - 2]) === 10 && lastHit >= 0 && lastHit <= 9) {
+            return huntedMode([lastHit + 10, lastHit + 10])
+          } else if (Math.abs(computerHitNumbers[computerHitNumbers.length - 1] - computerHitNumbers[computerHitNumbers.length - 2]) === 10 && lastHit >= 90 && lastHit <= 99) {
+            return huntedMode([lastHit - 10, lastHit - 10])
+          } else if (Math.abs(computerHitNumbers[computerHitNumbers.length - 1] - computerHitNumbers[computerHitNumbers.length - 2]) === 1 && lastHit % 10 !== 0 && lastHit % 10 !== 9) {
             return huntedMode([lastHit - 1, lastHit + 1])
+          } else if (Math.abs(computerHitNumbers[computerHitNumbers.length - 1] - computerHitNumbers[computerHitNumbers.length - 2]) === 1 && lastHit % 10 === 0 && lastHit % 10 !== 9) {
+            return huntedMode([lastHit + 1, lastHit + 1])
+          } else if (Math.abs(computerHitNumbers[computerHitNumbers.length - 1] - computerHitNumbers[computerHitNumbers.length - 2]) === 1 && lastHit % 10 !== 0 && lastHit % 10 === 9) {
+            return huntedMode([lastHit - 1, lastHit - 1])
           }
           return huntedMode([lastHit + 10, lastHit - 10, lastHit - 1, lastHit + 1])
         }
