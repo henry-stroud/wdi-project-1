@@ -666,7 +666,7 @@ $(() => {
   let lastHit
   let targetShipLengthy
   let originalShot
-  let computerTargetNumbers = []
+  let computerTargetNumbers = [-10,-9,-8,-7,-6,-5,-4,-3,-2,-1,100,101,102,103,104,105,106,107,108,109]
   const humanTargetNumbers = []
   const computerHitNumbers = []
   const computerMissNumbers = []
@@ -750,8 +750,15 @@ $(() => {
             return huntedMode([lastHit + 1, lastHit + 1])
           } else if (Math.abs(computerHitNumbers[computerHitNumbers.length - 1] - computerHitNumbers[computerHitNumbers.length - 2]) === 1 && lastHit % 10 !== 0 && lastHit % 10 === 9) {
             return huntedMode([lastHit - 1, lastHit - 1])
+          } else {
+            if (lastHit % 10 !== 0 && lastHit % 10 !== 9) {
+              return huntedMode([lastHit + 10, lastHit - 10, lastHit - 1, lastHit + 1])
+            } else if (lastHit % 10 === 0 && lastHit % 10 !== 9) {
+              return huntedMode([lastHit + 10, lastHit - 10, lastHit + 1, lastHit + 1])
+            } else if (lastHit % 10 !== 0 && lastHit % 10 === 9) {
+              return huntedMode([lastHit + 10, lastHit - 10, lastHit - 1, lastHit - 1])
+            }
           }
-          return huntedMode([lastHit + 10, lastHit - 10, lastHit - 1, lastHit + 1])
         }
       }
       const computerHit = Math.floor(Math.random() * 100)
