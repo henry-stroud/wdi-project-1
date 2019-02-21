@@ -17,6 +17,17 @@ $(() => {
   const $boxSub = $('.boxSub')
   const $boxCruiser = $('.boxCruiser')
   const $boxDestroyer = $('.boxDestroyer')
+  const $playButton = $('.playButton')
+  const $main = $('main')
+
+  $playButton.on('click', () => {
+    $main.css({
+      display: 'block'
+    })
+    $playButton.css({
+      display: 'none'
+    })
+  })
 
   $body.css({
     background: 'pink'

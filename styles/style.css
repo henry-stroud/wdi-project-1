@@ -11,6 +11,21 @@ body {
   background: pink;
 }
 
+main {
+  display:none;
+}
+
+.playButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 50px;
+  border: 1px solid black;
+  cursor: default;
+}
+
 .bothGrids {
   width: 900px;
   height: 400px;
