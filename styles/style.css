@@ -25,6 +25,15 @@ main {
   border: 1px solid black;
   cursor: default;
 }
+.winOrLose {
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 50px;
+  border: 1px solid black;
+  cursor: default;
+  display: none;
+}
 
 .bothGrids {
   width: 900px;

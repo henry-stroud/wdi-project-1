@@ -1,7 +1,6 @@
 $(() => {
 
 
-
   const $body = $('body')
   const mainGrid = document.querySelector('.grid')
   const humanGrid = document.querySelector('.humanGrid')
@@ -19,6 +18,7 @@ $(() => {
   const $boxDestroyer = $('.boxDestroyer')
   const $playButton = $('.playButton')
   const $main = $('main')
+  const $winOrLose = $('.winOrLose')
 
   $playButton.on('click', () => {
     $main.css({
@@ -818,9 +818,29 @@ $(() => {
     $gridItems.on('click', (e) => {
       if (humanCarrier.hitPoints === 0 && humanBattleShip.hitPoints === 0 && humanCruiser.hitPoints === 0 && humanSubmarine.hitPoints === 0 && humanDestroyer.hitPoints === 0) {
         $gridItems.unbind('click')
+        $winOrLose.css({
+          display: 'flex'
+        })
+        $winOrLose.text('You Lose, Play Again?')
+        $main.css({
+          display: 'none'
+        })
+        $winOrLose.on('click', () => {
+          location.reload()
+        })
         return console.log('You Lose')
       } else if (carrier.hitPoints === 0 && battleShip.hitPoints === 0 && cruiser.hitPoints === 0 && submarine.hitPoints === 0 && destroyer.hitPoints === 0) {
         $gridItems.unbind('click')
+        $winOrLose.css({
+          display: 'flex'
+        })
+        $winOrLose.text('You Won, Play Again?')
+        $main.css({
+          display: 'none'
+        })
+        $winOrLose.on('click', () => {
+          location.reload()
+        })
         return console.log('You Win')
       } else {
         const index = $gridItems.index(e.target)
@@ -844,10 +864,30 @@ $(() => {
             }
             if (humanCarrier.hitPoints === 0 && humanBattleShip.hitPoints === 0 && humanCruiser.hitPoints === 0 && humanSubmarine.hitPoints === 0 && humanDestroyer.hitPoints === 0) {
               $gridItems.unbind('click')
+              $winOrLose.css({
+                display: 'flex'
+              })
+              $winOrLose.text('You Lose, Play Again?')
+              $main.css({
+                display: 'none'
+              })
+              $winOrLose.on('click', () => {
+                location.reload()
+              })
               return console.log('You Lose')
             } else if (carrier.hitPoints === 0 && battleShip.hitPoints === 0 && cruiser.hitPoints === 0 && submarine.hitPoints === 0 && destroyer.hitPoints === 0) {
               $gridItems.unbind('click')
-              return console.log('You Win')
+              $winOrLose.css({
+                display: 'flex'
+              })
+              $winOrLose.text('You Won, Play Again?')
+              $main.css({
+                display: 'none'
+              })
+              $winOrLose.on('click', () => {
+                location.reload()
+              })
+              return console.log('You Win da game')
             } else {
               return
             }
