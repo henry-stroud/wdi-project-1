@@ -800,6 +800,7 @@ $(() => {
       $winOrLose.css({
         display: 'flex'
       })
+      $gridItems.unbind('click')
       $winOrLose.text('You Lose, Play Again?')
       $main.css({
         display: 'block'
@@ -812,6 +813,7 @@ $(() => {
       $winOrLose.css({
         display: 'flex'
       })
+      $gridItems.unbind('click')
       $winOrLose.text('You Won, Play Again?')
       $main.css({
         display: 'block'
