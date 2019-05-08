@@ -57,7 +57,7 @@ Battleships is a one person tactical guessing game. The aim is to sink all five 
 
 6. If computer sinks all user ships then it wins, and vice versa if user sinks all computer ships.
 
-![screenshot - All Ships Sunk, Game End](https://raw.githubusercontent.com/henry-stroud/wdi-project-1/master/endgame.png)
+![screenshot - All Ships Sunk, Game End](https://raw.githubusercontent.com/henry-stroud/wdi-project-1/master/endgameshot.png)
 
 
 
