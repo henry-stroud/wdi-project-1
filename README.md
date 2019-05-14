@@ -14,7 +14,7 @@
 
 ## My Game - Battleships
 
-![Battleships](https://raw.githubusercontent.com/henry-stroud/wdi-project-1/master/Main%20Page%20Screenshot.png)
+![Battleships](https://github.com/henry-stroud/wdi-project-1/blob/master/img/Main%20Page%20Screenshot.png?raw=true)
 
 You can find a hosted version here ----> [henry-stroud.github.io/wdi-project-1](https://henry-stroud.github.io/wdi-project-1/)
 
@@ -29,35 +29,35 @@ Battleships is a one person tactical guessing game. The aim is to sink all five 
 ### Game Instructions
 1. The game begins with a play button to click in order to start the game.
 
-![screenshot - Play Button](https://raw.githubusercontent.com/henry-stroud/wdi-project-1/master/Play%20Button%20Screenshot.png)
+![screenshot - Play Button](https://github.com/henry-stroud/wdi-project-1/blob/master/img/Play%20Button%20Screenshot.png?raw=true)
 
 2. Once the game begins, there is short animation of the grids appearing for both user on the left and computer on the right.
 
-![screenshot - Beginning grids](https://raw.githubusercontent.com/henry-stroud/wdi-project-1/master/Main%20Page%20Screenshot.png)
+![screenshot - Beginning grids](https://github.com/henry-stroud/wdi-project-1/blob/master/img/Main%20Page%20Screenshot.png?raw=true)
 
 3. User must click on the small ship icons on left side, below user grid. User then can choose whether they want to place their ship horizontal or vertical via clicking the corresponding buttons. Once clicked the user can click on a square on their grid to place the corresponding battleship.
 
-![screenshot - Placement of Ship](https://raw.githubusercontent.com/henry-stroud/wdi-project-1/master/Battleship%20Placement.png)
+![screenshot - Placement of Ship](https://github.com/henry-stroud/wdi-project-1/blob/master/img/Battleship%20Placement.png?raw=true)
 
 4. Ships cannot be placed adjacent and touching, they can also only be placed horizontally or vertically and not diagonally. Ships can also not be placed so that they go off the side of the board or be placed twice. A message will display if a ship cannot be placed, or has already been placed.
 
-![screenshot - Ship Cannot be Placed Here](https://raw.githubusercontent.com/henry-stroud/wdi-project-1/master/Ship%20cant%20be%20placed%20here.png)
+![screenshot - Ship Cannot be Placed Here](https://github.com/henry-stroud/wdi-project-1/blob/master/img/Ship%20cant%20be%20placed%20here.png?raw=true)
 
 5. Once all user ships are placed a message will display so user knows to click on enemy grid on the right to fire a torpedo at that square.
 
-![screenshot - All Ships Placed, Game Start](https://raw.githubusercontent.com/henry-stroud/wdi-project-1/master/All%20Ships%20Placed.png)
+![screenshot - All Ships Placed, Game Start](https://github.com/henry-stroud/wdi-project-1/blob/master/img/All%20Ships%20Placed.png?raw=true)
 
 6. Once a user clicks on an enemy grid, it will either show a white square or a red square. A white square is a miss, a red square is a hit. If user hits then user will have another turn until user misses. If user misses then computer has a turn, and the same rules apply for the computer.
 
-![screenshot - Torpedo Hit or Miss](https://raw.githubusercontent.com/henry-stroud/wdi-project-1/master/HitorMiss.png)
+![screenshot - Torpedo Hit or Miss](https://github.com/henry-stroud/wdi-project-1/blob/master/img/HitorMiss.png?raw=true)
 
 6. Once a ship is sunk it will turn black, and when user ship is sunk the icon for the ship will also black out.
 
-![screenshot - Ship Sunk](https://raw.githubusercontent.com/henry-stroud/wdi-project-1/master/shiphit.png)
+![screenshot - Ship Sunk](https://github.com/henry-stroud/wdi-project-1/blob/master/img/shiphit.png?raw=true)
 
 6. If computer sinks all user ships then it wins, and vice versa if user sinks all computer ships.
 
-![screenshot - All Ships Sunk, Game End](https://raw.githubusercontent.com/henry-stroud/wdi-project-1/master/endgameshot.png)
+![screenshot - All Ships Sunk, Game End](https://github.com/henry-stroud/wdi-project-1/blob/master/img/endgameshot.png?raw=true)
 
 
 
