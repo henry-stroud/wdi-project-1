@@ -1,4 +1,4 @@
-# WDI-Project1
+# WDI-Project 1
 # General Assembly Project 1 :  Front-end game
 
 ## Goal: To create a single page game
@@ -71,7 +71,7 @@ The same logic applies for the computer placement of the ships, replacing a user
 
 Once I had both user and computer ship placement done, I added the game mechanics. I included a click event on each grid square on the computer side, which when clicked would check that index against the computer grid array, if it had a ship object at that index number it would log a hit, make the square red and give the user another go. Once a ship is hit, the ship object that has been hit reduces hitPoints by 1. When the computer misses it goes back to the user turn in the playGame function, but when it returns to the computer's turn it checks whether the last hit Ship has hitpoints of greater than 0. If it does, then it fires adjacent to that square until it finds a hit, and then fires adjacent to that last hit in the correct direction.
 
-I did this directional shooting by adding the hit numbers and miss numbers into an array. The computer generates a number between 0-99 and checks whether that index number matches the array full of its already tried numbers. If it doesn't match then it fires. Once it has two hits next to each other, it then moves either horizontally or vertically depending on if the absolute value of the lastHit - the second Last Hit is 10 or 1. If all potential guesses around the hit are already in the already tried numbers array, then the computer will move back to check around the first original hit of that ship and move the other direction, until it has sunk.
+I did this directional shooting by adding the hit numbers and miss numbers into an array. The computer generates a number between 0-99 and checks whether that index number matches the array full of its already tried numbers. If it doesn't match then it fires. Once it has two hits next to each other, it then moves either horizontally or vertically depending on if the absolute value of the Last Hit - the second Last Hit is 10 or 1. If all potential guesses around the hit are already in the already tried numbers array, then the computer will move back to check around the first original hit of that ship and move the other direction, until it has sunk.
 
 By structuring the game with objects, it made it easier for me to reduce hitPoints of specific ships all at the same time, as well as knowing when which individual ship had sunk. When a ship has a hitPoints of 0 it adds the class 'sunk' which turns all its cells black. And also adds this class to the ship icon below the user grid.
 
