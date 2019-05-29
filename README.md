@@ -146,3 +146,7 @@ function huntedMode(hitRange) {
 ## Future features
 
 If I had more time, I would have liked to make the game playable on mobile, and also made the game expandable with a custom generated grid. So I would have liked to be able to generate a grid of specific size based on user input, and also number of ships. I would have also liked to implement another large grid underneath the main grid, so that I could do a css / javascript animation moving a 'torpedo' across from the user to computer grid and vice versa. This torpedo 'div' would be on a 1s timer that would correspond with the 1s it takes for the computer or user grid to log a hit. Creating the illusion that it had hit the grid at the same time.
+
+## Key Learnings
+
+The project taught me how to plan and execute a project with efficiency, and made me realise that however much planning you do for a project there will always be added features that you didn't think about beforehand. It also taught me valuable lessons on the fundamentals of logic-based programming and lateral thinking.
