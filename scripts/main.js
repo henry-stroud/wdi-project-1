@@ -957,6 +957,4 @@ $(() => {
     })
   }
 
-  // DO NOT WRITE BELOW THIS LINE
-
 })
