@@ -450,7 +450,6 @@ $(() => {
       display: 'none'
     })
     if (shipType.placed === true) {
-      console.log('You\'ve already placed this ship')
       $winOrLose.css({
         display: 'flex'
       })
@@ -463,17 +462,16 @@ $(() => {
           display: 'flex'
         })
         $winOrLose.text('Ship can\'t be placed here')
-        return (console.log('you cant place here'))
+        return
       }
       for (let i = 0; i < occupiedHuman.length; i++) {
         for (let x = 0; x < shipLength; x++) {
-          console.log(occupiedHuman)
           if (shipAnchorIndexVertical + (10 * x) === occupiedHuman[i]) {
             $winOrLose.css({
               display: 'flex'
             })
             $winOrLose.text('Ship can\'t be placed here')
-            return (console.log('you cant place ship here'))
+            return
           }
         }
       }
@@ -562,7 +560,7 @@ $(() => {
         display: 'flex'
       })
       $winOrLose.text('You\'ve already placed this ship')
-      return console.log('youve already placed this ship')
+      return
     } else {
       let shipAnchorIndexHorizontal = null
       shipAnchorIndexHorizontal = index
@@ -571,17 +569,16 @@ $(() => {
           display: 'flex'
         })
         $winOrLose.text('Ship can\'t be placed here')
-        return (console.log('you cant place here'))
+        return
       }
       for (let i = 0; i < occupiedHuman.length; i++) {
         for (let x = 0; x < shipLength; x++) {
           if (shipAnchorIndexHorizontal + (1 * x) === occupiedHuman[i]) {
-            console.log(occupiedHuman)
             $winOrLose.css({
               display: 'flex'
             })
             $winOrLose.text('Ship can\'t be placed here')
-            return (console.log('you cant place ship here'))
+            return
           }
         }
       }
@@ -701,7 +698,6 @@ $(() => {
       }
     }
     if (humanCarrier.placed === true && humanBattleShip.placed === true && humanCruiser.placed === true && humanSubmarine.placed === true && humanDestroyer.placed === true) {
-      console.log('all placed')
       $winOrLose.css({
         display: 'flex'
       })
@@ -754,14 +750,11 @@ $(() => {
       }
     } else {
       randomNumber = Math.floor(Math.random() * 4)
-      console.log(hitRange)
-      console.log(computerTargetNumbers)
     }
     // hit range needs to be individual to horizontal or vertical when it is parsed so have the random functions in the computer placement function
     const shotChoice = hitRange[randomNumber]
     for (let i = 0; i < computerTargetNumbers.length; i++) {
       if (shotChoice === computerTargetNumbers[i]) {
-        console.log('already tried this square')
         return huntedMode(hitRange)
       }
     }
@@ -769,9 +762,7 @@ $(() => {
       if (humanGridArray[shotChoice] === humanShipArray[i]) {
         const targetedShip = humanShipArray[i]
         targetedShip.hitPoints = targetedShip.hitPoints - 1
-        console.log('computer hit!')
         computerHitNumbers.push(shotChoice)
-        console.log(computerHitNumbers)
         computerTargetNumbers.push(shotChoice)
         $humanGridItems.eq(shotChoice).addClass('hit')
         if (targetedShip.hitPoints === 0) {
@@ -780,7 +771,6 @@ $(() => {
             $humanGridItems.eq(targetedShip.position[x]).addClass('sunk')
           }
           computerTargetNumbers = computerTargetNumbers.concat(targetedShip.occupied)
-          console.log(`Your ${targetedShip.name} has been sunk!`)
           targetedShip.relatedShip.css({
             background: 'black'
           })
@@ -788,7 +778,6 @@ $(() => {
         return setTimeout(computerShot, 1000)
       }
     }
-    console.log('computer miss!')
     $humanGridItems.eq(shotChoice).addClass('miss')
     computerTargetNumbers.push(shotChoice)
     computerMissNumbers.push(shotChoice)
@@ -808,7 +797,7 @@ $(() => {
       $winOrLose.on('click', () => {
         location.reload()
       })
-      return console.log('You Lose')
+      return
     } else if (carrier.hitPoints === 0 && battleShip.hitPoints === 0 && cruiser.hitPoints === 0 && submarine.hitPoints === 0 && destroyer.hitPoints === 0) {
       $winOrLose.css({
         display: 'flex'
@@ -821,14 +810,13 @@ $(() => {
       $winOrLose.on('click', () => {
         location.reload()
       })
-      return console.log('You Win')
+      return
     } else {
       lastHit = computerHitNumbers[computerHitNumbers.length - 1]
       if (lastHit !== undefined) {
         const shipTargeted = humanGridArray[lastHit]
         const shipTargetedHitpoints = shipTargeted.hitPoints
         if (shipTargetedHitpoints > 0) {
-          console.log(shipTargetedHitpoints)
           if (Math.abs(computerHitNumbers[computerHitNumbers.length - 1] - computerHitNumbers[computerHitNumbers.length - 2]) === 10) {
             return huntedMode([lastHit + 10, lastHit - 10])
           } else if (Math.abs(computerHitNumbers[computerHitNumbers.length - 1] - computerHitNumbers[computerHitNumbers.length - 2]) === 10 && lastHit >= 0 && lastHit <= 9) {
@@ -855,7 +843,6 @@ $(() => {
       const computerHit = Math.floor(Math.random() * 100)
       for (let i = 0; i < computerTargetNumbers.length; i++) {
         if (computerHit === computerTargetNumbers[i]) {
-          console.log('already tried this square')
           return computerShot()
         }
       }
@@ -863,9 +850,7 @@ $(() => {
         if (humanGridArray[computerHit] === humanShipArray[i]) {
           const targetedShip = humanShipArray[i]
           targetedShip.hitPoints = targetedShip.hitPoints - 1
-          console.log('computer hit!')
           computerHitNumbers.push(computerHit)
-          console.log(computerHitNumbers)
           computerTargetNumbers.push(computerHit)
           originalShot = computerHit
           $humanGridItems.eq(computerHit).addClass('hit')
@@ -875,7 +860,6 @@ $(() => {
               $humanGridItems.eq(targetedShip.position[x]).addClass('sunk')
             }
             computerTargetNumbers = computerTargetNumbers.concat(targetedShip.occupied)
-            console.log(`Your ${targetedShip.name} has been sunk!`)
             targetedShip.relatedShip.css({
               background: 'black'
             })
@@ -883,11 +867,9 @@ $(() => {
           return setTimeout(computerShot, 1000)
         }
       }
-      console.log('computer miss!')
       $humanGridItems.eq(computerHit).addClass('miss')
       computerTargetNumbers.push(computerHit)
       computerMissNumbers.push(computerHit)
-      console.log(computerMissNumbers)
       return
     }
   }
@@ -902,13 +884,12 @@ $(() => {
       const index = $gridItems.index(e.target)
       for (let i = 0; i < humanTargetNumbers.length; i++) {
         if (index === humanTargetNumbers[i]) {
-          return console.log('youve already tried this square')
+          return
         }
       }
       for (let i = 0; i < shipArray.length; i++) {
         if (grid[index] === shipArray[i]) {
           shipArray[i].hitPoints = shipArray[i].hitPoints - 1
-          console.log('hit!')
           humanTargetNumbers.push(index)
           $gridItems.eq(index).addClass('hit')
           if (shipArray[i].hitPoints === 0) {
@@ -916,7 +897,6 @@ $(() => {
               $gridItems.eq(shipArray[i].position[x]).addClass('sunk')
 
             }
-            console.log(`Enemy ${shipArray[i].name} has been sunk!`)
           }
           if (humanCarrier.hitPoints === 0 && humanBattleShip.hitPoints === 0 && humanCruiser.hitPoints === 0 && humanSubmarine.hitPoints === 0 && humanDestroyer.hitPoints === 0) {
             $gridItems.unbind('click')
@@ -930,7 +910,7 @@ $(() => {
             $winOrLose.on('click', () => {
               location.reload()
             })
-            return console.log('You Lose')
+            return
           } else if (carrier.hitPoints === 0 && battleShip.hitPoints === 0 && cruiser.hitPoints === 0 && submarine.hitPoints === 0 && destroyer.hitPoints === 0) {
             $gridItems.unbind('click')
             $winOrLose.css({
@@ -943,13 +923,12 @@ $(() => {
             $winOrLose.on('click', () => {
               location.reload()
             })
-            return console.log('You Win da game')
+            return
           } else {
             return
           }
         }
       }
-      console.log('miss!')
       $gridItems.eq(index).addClass('miss')
       humanTargetNumbers.push(index)
       return setTimeout(computerShot, 1000)
