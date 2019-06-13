@@ -343,25 +343,6 @@ $(() => {
 
   computerPlacement()
 
-
-  // for (let i = 0; i < grid.length; i++) {
-  //   if (grid[i] === carrier) {
-  //     $gridItems.eq(i).addClass('carrier')
-  //   }
-  //   if (grid[i] === battleShip) {
-  //     $gridItems.eq(i).addClass('battleShip')
-  //   }
-  //   if (grid[i] === cruiser) {
-  //     $gridItems.eq(i).addClass('cruiser')
-  //   }
-  //   if (grid[i] === submarine) {
-  //     $gridItems.eq(i).addClass('submarine')
-  //   }
-  //   if (grid[i] === destroyer) {
-  //     $gridItems.eq(i).addClass('destroyer')
-  //   }
-  // }
-
   const shipArray = [carrier, battleShip, cruiser, submarine, destroyer]
   const humanShipArray = [humanCarrier, humanBattleShip, humanCruiser, humanSubmarine, humanDestroyer]
 
